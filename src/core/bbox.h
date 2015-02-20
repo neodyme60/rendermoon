@@ -1,3 +1,8 @@
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
+
 #ifndef __RENDERMOON_CORE_BBOX__
 #define __RENDERMOON_CORE_BBOX__
 
@@ -9,14 +14,14 @@ class BBox
 public:
     BBox()
 	{
-        pMin = Point( rm_infintiy,  rm_infintiy,  rm_infintiy);
-        pMax = Point(-rm_infintiy, -rm_infintiy, -rm_infintiy);
+		pMin = Point(INFINITY, INFINITY, INFINITY);
+		pMax = Point(-INFINITY, -INFINITY, -INFINITY);
     }
     BBox(const Point &p) : pMin(p), pMax(p) { }
     BBox(const Point &p1, const Point &p2) 
 	{
-        pMin = Point(std::min(p1.x, p2.x), min(p1.y, p2.y), min(p1.z, p2.z));
-        pMax = Point(std::max(p1.x, p2.x), max(p1.y, p2.y), max(p1.z, p2.z));
+        pMin = Point(min(p1.x, p2.x), min(p1.y, p2.y), min(p1.z, p2.z));
+        pMax = Point(max(p1.x, p2.x), max(p1.y, p2.y), max(p1.z, p2.z));
     }
     friend BBox Union(const BBox &b, const Point &p);
     friend BBox Union(const BBox &b, const BBox &b2);

@@ -1,3 +1,7 @@
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #ifndef __RENDERMOON_INTEGRATORS_DIRECTLIGHTING__
 #define __RENDERMOON_INTEGRATORS_DIRECTLIGHTING__
 
@@ -9,7 +13,7 @@ public:
     DirectLighting() {}
     virtual ~DirectLighting() {}
 
-    Spectrum Li(const Scene&, Ray&, Intersection &i);
+    Spectrum Li(const Scene&, const Renderer&, const Ray&, const Intersection &i);
 };
 
 #endif

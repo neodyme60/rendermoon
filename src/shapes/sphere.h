@@ -1,5 +1,9 @@
-#ifndef __RENDERMOON_SPHERE__
-#define __RENDERMOON_SPHERE__
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
+#ifndef __RENDERMOON_SHAPE_SPHERE__
+#define __RENDERMOON_SHAPE_SPHERE__
 
 #include <core/shape.h>
 
@@ -13,36 +17,19 @@ public:
 
 	BBox ObjectBound() const;
 
-	bool GetIntersection(const Ray &ray, float *tHit, float *rayEpsilon, Intersection& i) const;
-    bool IsIntersected(const Ray &ray) const;
-    float Area() const;
-//    Point Sample(float u1, float u2, Normal *ns) const;
- //   Point Sample(const Point &p, float u1, float u2, Normal *ns) const;
-//    float Pdf(const Point &p, const Vector &wi) const;
-	bool CanIntersect() const;
-/*
-	void GetRandomSample(Normal& n, Point& p) const;
+    virtual bool GetIntersection(const Ray &ray, float *tHit, DifferentialGeometry&) const;
+    virtual bool IsIntersected(const Ray &ray) const;
+    virtual bool CanIntersect() const;
 
-	Point _UniformSampleHemisphere(float u1, float u2) const;
+    virtual float Area() const;
 
+    virtual Point SampleUniform(float u1, float u2, Normal *Ns) const;
+    virtual Point SampleBySolidAngle(const Point &P, float u1, float u2, Normal *Ns) const;
 
+    virtual float Pdf(const Point &p, const Vec3 &wi) const;
 
-	bool IsEmiter() { return true;}
-
-    Spectrum L(Intersection& i, Point& light_sample_point, Normal& light_sample_nornal)
-	{
-		Spectrum color;
-		Vec3 incidence = (light_sample_point-i.p);
-
-		float cos_a = std::max(Dot(Normalize(light_sample_nornal), Normalize(-incidence)), 0.0f);
-		float cos_b = std::max(Dot(Normalize(i.n), Normalize(incidence)), 0.0f);
-		float geom_factor = cos_a * cos_b /incidence.LengthSquared();
-		return geom_factor;// * this->area() * this->m_material->m_color;
-	}
-*/
-    // Sphere Private Data
-    float	radius;
-	Vec3	pos;
+protected:
+    float	m_radius;
 };
 
 #endif

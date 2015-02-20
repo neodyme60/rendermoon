@@ -1,11 +1,3 @@
-#ifndef __RENDERMOON_CORE_ACCELERATOR__
-#define __RENDERMOON_CORE_ACCELERATOR__
-
-class Accelerator : public Primitive
-{
-public:
-    Accelerator() {}
-    virtual ~Accelerator() {}
-};
-
+#if defined(_MSC_VER)
+#pragma once
 #endif

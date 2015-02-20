@@ -1,3 +1,8 @@
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
+
 #ifndef __RENDERMOON_CAMERA__ORTHOGRAPHIC__
 #define __RENDERMOON_CAMERA__ORTHOGRAPHIC__
 

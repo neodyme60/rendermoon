@@ -1,3 +1,7 @@
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #ifndef __RENDERMOON_CAMERA__PERSPECTIVE__
 #define __RENDERMOON_CAMERA__PERSPECTIVE__
 

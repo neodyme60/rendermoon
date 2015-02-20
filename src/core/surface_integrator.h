@@ -1,3 +1,7 @@
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #ifndef __RENDERMOON_CORE_SURFACE_INTEGRATOR__
 #define __RENDERMOON_CORE_SURFACE_INTEGRATOR__
 
@@ -11,7 +15,7 @@ public:
     SurfaceIntegrator() : Integrator() {}
     virtual ~SurfaceIntegrator() {}
 
-    virtual Spectrum Li(const Scene&, Ray&, Intersection&)=0;
+    virtual Spectrum Li(const Scene&, const Renderer&, const Ray&, const Intersection&)=0;
 };
 
 #endif

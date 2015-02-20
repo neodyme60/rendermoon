@@ -64,9 +64,9 @@ void Image::WriteImage(float splatScale)
 
 void Image::AddSample(const CameraSample &sample, const Spectrum &L)
 {
-	int r= (int)Clamp(L.c.x*255.0f, 0.0f, 255.0f);
-	int g = (int)Clamp(L.c.y*255.0f, 0.0f, 255.0f);
-	int b = (int)Clamp(L.c.z*255.0f, 0.0f, 255.0f);
+	int r = (int)Clamp(pow(L.m_data[0], 1.0/2.2)*255.0f, 0.0f, 255.0f);
+	int g = (int)Clamp(pow(L.m_data[1], 1.0/2.2)*255.0f, 0.0f, 255.0f);
+	int b = (int)Clamp(pow(L.m_data[2], 1.0/2.2)*255.0f, 0.0f, 255.0f);
 
 	data[sample.imageX+sample.imageY*m_width] = (r<<16) + (g<<8) + b;
 }

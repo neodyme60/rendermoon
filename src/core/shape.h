@@ -1,29 +1,39 @@
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #ifndef __RENDERMOON_CORE_SHAPE__
 #define __RENDERMOON_CORE_SHAPE__
 
+#include <core/memory.h>
 
-class Shape 
+class DifferentialGeometry;
+
+class Shape : public ReferenceCounted
 {
 public:
-    Shape(Transform *o2w, Transform *w2o);
+    Shape(const Transform *o2w, const Transform *w2o);
     virtual ~Shape();
+
     virtual BBox ObjectBound() const = 0;
     virtual BBox WorldBound() const;
+
+    virtual void Refine(vector<Reference<Shape> > &refined) const;
+
     virtual bool CanIntersect() const;
-    virtual bool GetIntersection(const Ray &ray, float *tHit, float *rayEpsilon, Intersection&) const;
+    virtual bool GetIntersection(const Ray &ray, float *tHit, DifferentialGeometry&) const;
     virtual bool IsIntersected(const Ray &ray) const;
+
     virtual float Area() const;
-    virtual Point Sample(float u1, float u2, Normal *Ns) const 
-	{
-        return Point();
-    }
-    virtual Point Sample(const Point &P, float u1, float u2, Normal *Ns) const 
-	{
-        return Sample(u1, u2, Ns);
-    }
+
+    virtual float Pdf(const Point &p, const Vec3 &wi) const;
+    virtual float Pdf(const Point &Pshape) const;
+
+    virtual Point SampleUniform(float u1, float u2, Normal*) const;
+    virtual Point SampleBySolidAngle(const Point &P, float u1, float u2, Normal*) const;
 
     // Shape Public Data
-    Transform *m_objectToWorld, *m_worldToObject;
+    const Transform *m_ObjectToWorld, *m_WorldToObject;
 };
 
 #endif

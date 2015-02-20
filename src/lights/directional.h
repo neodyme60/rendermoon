@@ -1,3 +1,7 @@
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #ifndef __RENDERMOON_DIRECTIONAL_LIGHT__
 #define __RENDERMOON_DIRECTIONAL_LIGHT__
 
@@ -6,18 +10,17 @@
 class DirectionalLight : public Light
 {
 public:
-	Vec3 m_direction;;
-
-	DirectionalLight(Transform& l2w, Spectrum & intensity);
-    DirectionalLight(const Vec3 direction);
+	DirectionalLight(const Transform& l2w, const Spectrum& radiance, const Vec3& direction);
     virtual ~DirectionalLight() {}
 
-	bool GetIntersection(const Ray &r, Intersection&) const  { return false; }
-	bool IsIntersected(const Ray &r) const { return false; } 
+    //implement light
+    virtual float Pdf(const Point &p, const Vec3 &wi) const;
+    Spectrum Sample_L(const Point &p, float pEpsilon, float time, Vec3 *wi, float *pdf) const;
+    Spectrum Sample_L(const Scene *scene, float u1, float u2, float time, Ray *ray, Normal *Ns, float *pdf) const;
 
-	void GetRandomSample(Normal& n, Point& p) const {}
-
-    Spectrum L(Intersection& i, Point& light_sample_point, Normal& light_sample_nornal);
+protected:
+    Vec3        m_Direction;
+    Spectrum    m_L;
 };
 
 #endif

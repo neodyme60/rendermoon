@@ -1,13 +1,21 @@
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #ifndef __RENDERMOON_CORE_MATERIAL__
 #define __RENDERMOON_CORE_MATERIAL__
 
 
-class Material 
+#include <core/bsdf.h>
+#include <core/intersection.h>
+#include <core/memory.h>
+
+class Material : public ReferenceCounted
 {
 public:
-	Material() {}
+	Material();
 
-	Vec3 m_color;
+    virtual BSDF *GetBSDF(const DifferentialGeometry &dg) const = 0;
 };
 
 #endif

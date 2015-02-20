@@ -5,15 +5,15 @@ Sampler::Sampler(SurfaceIntegrator * surfaceIntegrator, VolumeIntegrator* volume
 
 }
 
-Spectrum Sampler::Li(const Scene *scene, Ray& r, Intersection &i)
+Spectrum Sampler::Li(const Scene *scene, const Ray& ray, Intersection &i)
 {
 	Spectrum Li = Spectrum();
 
-	if (scene->IsIntersected(r))
+	if (scene->IsIntersected(ray))
 	{
-		if (scene->GetIntersection(r, i))
+		if (scene->GetIntersection(ray, i))
 		{
-			Li = m_surfaceIntegrator->Li(*scene, r, i); 
+			Li = m_surfaceIntegrator->Li(*scene, *this, ray, i);
 		}
 		else
 			//background
@@ -42,8 +42,6 @@ void Sampler::Render(const Scene *scene)
 			for(int s=0; s<m_samples; s++)
 			{
 				Intersection i;
-				i.t = 10e5f;
-
 				camera->GenerateRay(cameraSample, &ray);
 				Li += this->Li(scene, ray, i);
 			}

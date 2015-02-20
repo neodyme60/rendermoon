@@ -1,3 +1,7 @@
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #ifndef __RENDERMOON_RENDERER_SAMPLER__
 #define __RENDERMOON_RENDERER_SAMPLER__
 
@@ -18,7 +22,7 @@ public:
     Sampler(SurfaceIntegrator * surfaceIntegrator, VolumeIntegrator* volumeIntegrator, int samples);
     void Render(const Scene*);
 
-	Spectrum Li(const Scene *scene, Ray&, Intersection &i);
+	Spectrum Li(const Scene *scene, const Ray&, Intersection &i);
 
 protected:
     VolumeIntegrator* m_volumeIntegrator;

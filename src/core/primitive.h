@@ -1,5 +1,12 @@
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #ifndef __RENDERMOON_CORE_PRIMITIVE__
 #define __RENDERMOON_CORE_PRIMITIVE__
+
+#include "differential_geometry.h"
+#include <core/memory.h>
 
 class Transform;
 struct Intersection;
@@ -8,28 +15,26 @@ class Normal;
 class Spectrum;
 class Material;
 class Point;
+class BSDF;
 
-class Primitive
+class Primitive : public ReferenceCounted
 {
 public:
 	Primitive();
-	Primitive(const Transform& o2w, const Transform& w2o);
     virtual ~Primitive(){}
 
     virtual bool GetIntersection(const Ray &r, Intersection&)  const = 0;
-    virtual bool IsIntersected(const Ray &r) const=0;
-
+    virtual bool IsIntersected(const Ray &r) const = 0;
+    virtual bool CanIntersect() const;
 	virtual void GetRandomSample(Normal& n, Point& p) const {}
+    virtual void Refine(list<Reference<Primitive> > &refined) const;
+    void FullyRefine(list<Reference<Primitive> > &refined) const;
+    virtual const AreaLight *GetAreaLight() const = 0;
 
-	virtual float area() { return 0.0f;}
+	virtual Spectrum L(Intersection& i, Point& light_point, Normal& light_nornal);
 
-	virtual     Spectrum L(Intersection& i, Point& light_point, Normal& light_nornal) { return Spectrum(); }
+	virtual BSDF *GetBSDF(const DifferentialGeometry& dg, const Transform &ObjectToWorld) const = 0;
 
-	Material*	m_material;
-	Transform	m_objectToWorld, m_worldToObject;
-	bool		isemiter;
-	std::string	name;
-	Vec3		pos;
 };
 
 #endif

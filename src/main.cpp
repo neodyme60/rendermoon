@@ -790,10 +790,11 @@ void tp1_5()
 	film->WriteImage();
 }
 */
+
 void tp1_5(int samples, std::string filename)
 {
 	//primitives list
-    std::list<Primitive*> primitives;
+    std::list<Reference<Primitive>> primitives;
 
 	//lights list
     std::list<Light*> lights;
@@ -803,21 +804,21 @@ void tp1_5(int samples, std::string filename)
 	//shape 1
 	//
 	//Sphere(1e5, Vec( 1e5+1,40.8,81.6), Vec(),Vec(.75,.25,.25),DIFF),//Left
-	Transform t1a= Transform::CreateTranslate(1e5+99,40.8f,81.6f);
+	Transform t1a= Transform::CreateTranslate(1e5+1,40.8f,81.6f);
 	Transform t1b= t1a.GetInverse();
-	Shape *s1 = new Sphere(&t1a, &t1b, 1e5f);
-	Material *m1 = new DiffuseMaterial(Vec3(0.75f,0.25f,0.25f));
-	GeometricPrimitive *g1= new GeometricPrimitive(s1, m1, 0);
+	Reference<Shape> s1 = Reference<Shape>(new Sphere(&t1a, &t1b, 1e5f));
+	Material *m1 = new DiffuseMaterial(Spectrum(Vec3(0.75f,0.25f,0.25f)));
+	Reference<Primitive> g1(new GeometricPrimitive(s1, m1, NULL));
 
 	//
 	//shape 2
 	//
 //	   Sphere(1e5, Vec(-1e5+99,40.8,81.6),Vec(),Vec(.25,.25,.75),DIFF),//Rght 
-	Transform t2a= Transform::CreateTranslate(-1e5f-1.0f, 40.8f, 81.6f);
+	Transform t2a= Transform::CreateTranslate(-1e5f+99.0f, 40.8f, 81.6f);
 	Transform t2b= t2a.GetInverse();
-	Shape *s2 = new Sphere(&t2a, &t2b, 1e5);
-	Material *m2 = new DiffuseMaterial(Vec3(0.25f,0.25f,0.75f));
-	GeometricPrimitive *g2= new GeometricPrimitive(s2, m2, 0);
+    Reference<Shape> s2 = Reference<Shape>(new Sphere(&t2a, &t2b, 1e5));
+	Material *m2 = new DiffuseMaterial(Spectrum(Vec3(0.25f,0.25f,0.75f)));
+    Reference<Primitive> g2(new GeometricPrimitive(s2, m2, NULL));
 
 	//
 	//shape 3
@@ -825,9 +826,9 @@ void tp1_5(int samples, std::string filename)
 	//   Sphere(1e5, Vec(50,40.8, 1e5),     Vec(),Vec(.75,.75,.75),DIFF),//Back 
 	Transform t3a= Transform::CreateTranslate(50.0f,40.8f, 1e5);
 	Transform t3b= t3a.GetInverse();
-	Shape *s3 = new Sphere(&t3a, &t3b, 1e5f);
-	Material *m3 = new DiffuseMaterial(Vec3(0.75f,0.75f,0.75f));
-	GeometricPrimitive* g3 = new GeometricPrimitive(s3, m3, 0);
+    Reference<Shape> s3 = Reference<Shape>(new Sphere(&t3a, &t3b, 1e5f));
+	Material *m3 = new DiffuseMaterial(Spectrum(Vec3(0.75f,0.75f,0.75f)));
+    Reference<Primitive> g3(new GeometricPrimitive(s3, m3, NULL));
 
 	//
 	//shape 4
@@ -835,9 +836,9 @@ void tp1_5(int samples, std::string filename)
 //	Sphere(1e5, Vec(50,40.8,-1e5+170), Vec(),Vec(),           DIFF),//Frnt 
 	Transform t4a= Transform::CreateTranslate(50.0f,40.8f,-1e5+120);
 	Transform t4b= t4a.GetInverse();
-	Shape *s4 = new Sphere(&t4a, &t4b, 1e5f);
-	Material *m4 = new DiffuseMaterial(Vec3(1.0f,1.0f,1.0f));
-	GeometricPrimitive* g4 = new GeometricPrimitive(s4, m4, 0);
+    Reference<Shape> s4 = Reference<Shape>(new Sphere(&t4a, &t4b, 1e5f));
+	Material *m4 = new DiffuseMaterial(Spectrum(Vec3(1.0f,1.0f,1.0f)));
+    Reference<Primitive> g4(new GeometricPrimitive(s4, m4, NULL));
 		   
 	//
 	//shape 5
@@ -845,18 +846,18 @@ void tp1_5(int samples, std::string filename)
 //		   Sphere(1e5, Vec(50, 1e5, 81.6),    Vec(),Vec(.75,.75,.75),DIFF),//Botm 
 	Transform t5a= Transform::CreateTranslate(50, -1e5, 0);
 	Transform t5b= t5a.GetInverse();
-	Shape *s5 = new Sphere(&t5a, &t5b, 1e5f);
-	Material *m5 = new DiffuseMaterial(Vec3(0.75f,0.75f,0.75f));
-	GeometricPrimitive* g5 = new GeometricPrimitive(s5, m5, 0);
+    Reference<Shape> s5 = Reference<Shape>(new Sphere(&t5a, &t5b, 1e5f));
+	Material *m5 = new DiffuseMaterial(Spectrum(Vec3(0.75f,0.75f,0.75f)));
+    Reference<Primitive> g5 = (new GeometricPrimitive(s5, m5, NULL));
 	//
 	//shape 6
 	//
 //	Sphere(1e5, Vec(50,-1e5+81.6,81.6),Vec(),Vec(.75,.75,.75),DIFF),//Top 
 	Transform t6a= Transform::CreateTranslate(50.0f, 1e5f+81.6f, 90.6f);
 	Transform t6b= t6a.GetInverse();
-	Shape *s6 = new Sphere(&t6a, &t6b, 1e5);
-	Material *m6 = new DiffuseMaterial(Vec3(0.75f,0.75f,0.75f));
-	GeometricPrimitive* g6 = new GeometricPrimitive(s6, m6, 0);
+    Reference<Shape> s6 = Reference<Shape>(new Sphere(&t6a, &t6b, 1e5));
+	Material *m6 = new DiffuseMaterial(Spectrum(Vec3(0.75f,0.75f,0.75f)));
+    Reference<Primitive> g6(new GeometricPrimitive(s6, m6, NULL));
 
 	//
 	//shape 7
@@ -864,9 +865,9 @@ void tp1_5(int samples, std::string filename)
 //	Sphere(16.5,Vec(27,16.5,47),       Vec(),Vec(1,1,1)*.999, SPEC),//Mirr 
 	Transform t7a= Transform::CreateTranslate(27.0f, 16.5f, 180.0f);
 	Transform t7b= t7a.GetInverse();
-	Shape *s7 = new Sphere(&t7a, &t7b, 16.5f);
-	Material *m7 = new DiffuseMaterial(Vec3(1.0f,1.0f,1.0f));
-	GeometricPrimitive* g7 = new GeometricPrimitive(s7, m7, 0);
+    Reference<Shape> s7 = Reference<Shape>(new Sphere(&t7a, &t7b, 16.5f));
+	Material *m7 = new DiffuseMaterial(Spectrum(Vec3(1.0f,1.0f,1.0f)));
+    Reference<Primitive> g7(new GeometricPrimitive(s7, m7, NULL));
 
 	//
 	//shape 8
@@ -874,32 +875,35 @@ void tp1_5(int samples, std::string filename)
 //	Sphere(16.5,Vec(73,16.5,78),       Vec(),Vec(1,1,1)*.999, REFR),//Glas 
 	Transform t8a= Transform::CreateTranslate(73.0f, 16.5f, 150.0f);
 	Transform t8b= t8a.GetInverse();
-	Shape *s8 = new Sphere(&t8a, &t8b, 16.5f);
-	Material *m8 = new DiffuseMaterial(Vec3(1.0f,1.0f,1.0f));
-	GeometricPrimitive* g8 = new GeometricPrimitive(s8, m8, 0);
+    Reference<Shape> s8 = Reference<Shape>(new Sphere(&t8a, &t8b, 16.5f));
+	Material *m8 = new DiffuseMaterial(Spectrum(Vec3(1.0f,1.0f,1.0f)));
+    Reference<Primitive> g8(new GeometricPrimitive(s8, m8, NULL));
 
 	//
 	//shape 9 lite
 	//
 	Transform t9a= Transform::CreateTranslate(70.0f, 70.5f, 180.0f);
 	Transform t9b= t9a.GetInverse();
-	Shape *s9 = new Sphere(&t9a, &t9b, 2.0f);
-	Material *m9 = new DiffuseMaterial(Vec3(M_PI*0.75f, M_PI*0.75f, M_PI)*70.0f);
-    AreaLight * al = new AreaLight(t9a);
-	GeometricPrimitive* g9 = new GeometricPrimitive(s9, m9, al);
+    Reference<Shape> s9 = Reference<Shape>(new Sphere(&t9a, &t9b, 2.0f));
+	Material *m9 = new DiffuseMaterial(Spectrum(Vec3(M_PI*0.75f, M_PI*0.75f, M_PI)*70.0f));
+    Spectrum a1l = Spectrum(130.0);
+    DiffuseAreaLight * al = new DiffuseAreaLight(t9a, a1l, s9);
+    Reference<Primitive> g9(new GeometricPrimitive(s9, m9, al));
 	lights.push_back(al);
-    primitives.push_back(g9);
+    primitives.push_back(Reference<Primitive>(g9));
 
 	//Accelerator
 	primitives.push_back(g1);
 	primitives.push_back(g2);
-//	primitives.push_back(g3);
+////	primitives.push_back(g3);
 	primitives.push_back(g4);
 	primitives.push_back(g5);
 	primitives.push_back(g6);
 	primitives.push_back(g7);
 	primitives.push_back(g8);
 	primitives.push_back(g9);
+
+
     DummyAccelerator *accelerator = new DummyAccelerator(primitives);
 
     //create film
@@ -928,8 +932,9 @@ void tp1_5(int samples, std::string filename)
     PerspectiveCamera *camera = new PerspectiveCamera(cam2world, screenWindow, fov, film);
 
     //integrator
-    VolumeIntegrator* volume_integrator = nullPtr;
-	SurfaceIntegrator* surface_integrator =  new DirectLighting();
+    VolumeIntegrator* volume_integrator = 0;
+//    SurfaceIntegrator* surface_integrator =  new AmbientOcclusion(10, 10.0f);
+    SurfaceIntegrator* surface_integrator =  new DirectLighting();
 
     //renderer
     Renderer * renderer = new Sampler(surface_integrator, volume_integrator, samples);
@@ -942,6 +947,427 @@ void tp1_5(int samples, std::string filename)
 	film->WriteImage();
 }
 
+void mitsuba_cbox(int samples, std::string filename)
+{
+    //primitives list
+    std::list<Reference<Primitive>> primitives;
+
+    //lights list
+    std::list<Light*> lights;
+
+    Transform t1a= Transform::CreateTranslate(0.0f, -0.5f, 0.0f);
+    Transform t1b= t1a.GetInverse();
+
+    ObjMeshLoader obj_loader;
+
+    //floor
+    obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_floor.obj");
+    Reference<Shape> floor = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
+            obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0]:0,
+            obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
+            obj_loader.m_Normals.size()>0 ? &obj_loader.m_Normals[0] : NULL,
+            0,
+            obj_loader.m_uvs.size()>0 ? &obj_loader.m_uvs[0] : NULL));
+    Material *m1 = new DiffuseMaterial(Spectrum(Vec3(0.75f,0.25f,0.25f)));
+    Primitive *g1= new GeometricPrimitive(floor, m1, NULL);
+    if (!g1->CanIntersect())
+    {
+        list<Reference<Primitive> > refinedPrimitives;
+        g1->FullyRefine(refinedPrimitives);
+        g1 = new DummyAccelerator(refinedPrimitives);
+    }
+
+
+    //ceiling
+    obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_ceiling.obj");
+    Reference<Shape> ceiling = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size()/3, (int)obj_loader.m_Points.size(),
+            obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
+            obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
+            obj_loader.m_Normals.size()>0 ? &obj_loader.m_Normals[0] : NULL,
+            0,
+            obj_loader.m_uvs.size()>0 ? &obj_loader.m_uvs[0] : NULL));
+    Material *m2 = new DiffuseMaterial(Spectrum(Vec3(0.25f, 0.25f, 0.75f)));
+    Primitive *g2 = new GeometricPrimitive(ceiling, m2, NULL);
+    if (!g2->CanIntersect())
+    {
+        list<Reference<Primitive> > refinedPrimitives;
+        g2->FullyRefine(refinedPrimitives);
+        g2 = new DummyAccelerator(refinedPrimitives);
+    }
+
+
+    //back
+    obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_back.obj");
+    Reference<Shape> back = Reference<Shape> (new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size()/3, (int)obj_loader.m_Points.size(),
+            obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
+            obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
+            obj_loader.m_Normals.size()>0 ? &obj_loader.m_Normals[0] : NULL,
+            0,
+            obj_loader.m_uvs.size()>0 ? &obj_loader.m_uvs[0] : NULL));
+    Material *m3 = new DiffuseMaterial(Spectrum(Vec3(0.75f, 0.75f, 0.75f)));
+    Primitive* g3 = new GeometricPrimitive(back, m3, NULL);
+    if (!g3->CanIntersect())
+    {
+        list<Reference<Primitive> > refinedPrimitives;
+        g3->FullyRefine(refinedPrimitives);
+        g3 = new DummyAccelerator(refinedPrimitives);
+    }
+
+    //greenwall
+    obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_greenwall.obj");
+    Reference<Shape> greenwall = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size()/3, (int)obj_loader.m_Points.size(),
+            obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
+            obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
+            obj_loader.m_Normals.size()>0 ? &obj_loader.m_Normals[0] : NULL,
+            0,
+            obj_loader.m_uvs.size()>0 ? &obj_loader.m_uvs[0] : NULL));
+    Material *m4 = new DiffuseMaterial(Spectrum(Vec3(1.0f, 1.0f, 1.0f)));
+    Primitive* g4 = new GeometricPrimitive(greenwall, m4, NULL);
+    if (!g4->CanIntersect())
+    {
+        list<Reference<Primitive> > refinedPrimitives;
+        g4->FullyRefine(refinedPrimitives);
+        g4 = new DummyAccelerator(refinedPrimitives);
+    }
+
+    //redwall
+    obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_redwall.obj");
+    Reference<Shape> redwall = Reference<Shape> (new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size()/3, (int)obj_loader.m_Points.size(),
+            obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
+            obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
+            obj_loader.m_Normals.size()>0 ? &obj_loader.m_Normals[0] : NULL,
+            0,
+            obj_loader.m_uvs.size()>0 ? &obj_loader.m_uvs[0] : NULL));
+    Material *m5 = new DiffuseMaterial(Spectrum(Vec3(0.75f, 0.75f, 0.75f)));
+    Primitive* g5 = new GeometricPrimitive(redwall, m5, NULL);
+    if (!g5->CanIntersect())
+    {
+        list<Reference<Primitive> > refinedPrimitives;
+        g5->FullyRefine(refinedPrimitives);
+        g5 = new DummyAccelerator(refinedPrimitives);
+    }
+
+    //largebox
+    obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_largebox.obj");
+    Reference<Shape> largebox = Reference<Shape> (new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
+            obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
+            obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
+            obj_loader.m_Normals.size()>0 ? &obj_loader.m_Normals[0] : NULL,
+            0,
+            obj_loader.m_uvs.size()>0 ? &obj_loader.m_uvs[0] : NULL));
+    Material *m6 = new DiffuseMaterial(Spectrum(Vec3(0.75f, 0.75f, 0.75f)));
+    Primitive* g6 = new GeometricPrimitive(largebox, m6, NULL);
+    if (!g6->CanIntersect())
+    {
+        list<Reference<Primitive> > refinedPrimitives;
+        g6->FullyRefine(refinedPrimitives);
+        g6 = new DummyAccelerator(refinedPrimitives);
+    }
+
+    //smallbox
+    obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_smallbox.obj");
+    Reference<Shape> smallbox = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
+            obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
+            obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
+            obj_loader.m_Normals.size()>0 ? &obj_loader.m_Normals[0] : NULL,
+            0,
+            obj_loader.m_uvs.size()>0 ? &obj_loader.m_uvs[0] : NULL));
+    Material *m7 = new DiffuseMaterial(Spectrum(Vec3(0.75f, 0.75f, 0.75f)));
+    Primitive* g7 = new GeometricPrimitive(smallbox, m7, NULL);
+    if (!g7->CanIntersect())
+    {
+        list<Reference<Primitive> > refinedPrimitives;
+        g7->FullyRefine(refinedPrimitives);
+        g7 = new DummyAccelerator(refinedPrimitives);
+    }
+
+
+    //
+    //shape 9 lite
+    //
+    //
+/*
+    obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_luminaire.obj");
+    Shape *luminaire = new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size()/3, (int)obj_loader.m_Points.size(),
+            obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
+            obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
+            obj_loader.m_Normals.size()>0 ? &obj_loader.m_Normals[0] : NULL,
+            0,
+            obj_loader.m_uvs.size()>0 ? &obj_loader.m_uvs[0] : NULL);
+    Material *m6 = new DiffuseMaterial(Spectrum(Vec3(M_PI*0.75f, M_PI*0.75f, M_PI)*70.0f));
+    Primitive* g6 = new GeometricPrimitive(luminaire, m6, NULL);
+    if (!g6->CanIntersect())
+    {
+        list<Reference<Primitive> > refinedPrimitives;
+        g6->FullyRefine(refinedPrimitives);
+        g6 = new DummyAccelerator(refinedPrimitives);
+    }
+    Spectrum a1l = Spectrum(130.0);
+    DiffuseAreaLight * al = new DiffuseAreaLight(t1a, a1l);
+    lights.push_back(al);
+*/
+
+    Transform t9a = Transform::CreateTranslate(278.0f, 380.79999f, 279.0f);
+    Transform t9b= t9a.GetInverse();
+    Reference<Shape> s9 = Reference<Shape> (new Sphere(&t9a, &t9b, 50.0f));
+    Material *m9 = new DiffuseMaterial(Spectrum(Vec3(M_PI*0.75f, M_PI*0.75f, M_PI)*70.0f));
+    Spectrum a1l = Spectrum(13.0);
+    DiffuseAreaLight * al = new DiffuseAreaLight(t9a, a1l, s9);
+    GeometricPrimitive* g9 = new GeometricPrimitive(s9, m9, al);
+    lights.push_back(al);
+    primitives.push_back(g9);
+
+    //Accelerator
+    primitives.push_back(g1);
+    primitives.push_back(g2);
+    primitives.push_back(g3);
+    primitives.push_back(g4);
+    primitives.push_back(g5);
+    primitives.push_back(g6);
+    primitives.push_back(g7);
+
+    Primitive *accelerator = new DummyAccelerator(primitives);
+
+    //create film
+    Film * film = new Image(512/4, 384/4, filename);
+
+    //create camera
+    Transform cam2world = Transform::CreateLookAt(Point(278.0f, 273.0f, -800.0f ), Point(278.0f, 273.0f, -799.0f), Vec3(0.0f, 1.0f, 0.0f)).GetInverse();
+
+    float aspectratio =float(film->GetWidth())/float(film->GetHeight());
+    float screenWindow[4];
+    if (aspectratio > 1.f)
+    {
+        screenWindow[0] = -aspectratio;
+        screenWindow[1] =  aspectratio;
+        screenWindow[2] = -1.f;
+        screenWindow[3] =  1.f;
+    }
+    else
+    {
+        screenWindow[0] = -1.f;
+        screenWindow[1] =  1.f;
+        screenWindow[2] = -1.f / aspectratio;
+        screenWindow[3] =  1.f / aspectratio;
+    }
+	float fov = 39.3077 * 1.0;
+    PerspectiveCamera *camera = new PerspectiveCamera(cam2world, screenWindow, fov, film);
+
+    //integrator
+    VolumeIntegrator* volume_integrator = nullPtr;
+//    SurfaceIntegrator* surface_integrator =  new AmbientOcclusion(10, 10.0f);
+//	SurfaceIntegrator* surface_integrator = new DirectLighting();
+	SurfaceIntegrator* surface_integrator = new PathTracing();
+
+    //renderer
+    Renderer * renderer = new Sampler(surface_integrator, volume_integrator, samples);
+
+    //scene
+    Scene* scene = new Scene(accelerator, lights, camera);
+
+    renderer->Render(scene);
+
+    film->WriteImage();
+}
+
+void mitsuba_veach_mis(int samples, std::string filename)
+{
+    //primitives list
+    std::list<Reference<Primitive>> primitives;
+
+    //geometric primitives list
+    std::list<GeometricPrimitive*> geometric_primitives;
+
+    //lights list
+    std::list<Light*> lights;
+
+    Transform t1a= Transform();
+    Transform t1b= t1a.GetInverse();
+
+    ObjMeshLoader obj_loader;
+
+    //floor
+    obj_loader.Parse("scenes\\mitsuba_veach_mis\\floor.obj");
+    Reference<Shape> floor = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
+            obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0]:0,
+            obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
+            obj_loader.m_Normals.size()>0 ? &obj_loader.m_Normals[0] : NULL,
+            0,
+            obj_loader.m_uvs.size()>0 ? &obj_loader.m_uvs[0] : NULL));
+	Material *m1 = new DiffuseMaterial(Spectrum(Vec3(0.4f, 0.4f, 0.4f)));
+    Primitive *g1= new GeometricPrimitive(floor, m1, NULL);
+    if (!g1->CanIntersect())
+    {
+        list<Reference<Primitive> > refinedPrimitives;
+        g1->FullyRefine(refinedPrimitives);
+        g1 = new DummyAccelerator(refinedPrimitives);
+    }
+
+
+    //plate1
+    obj_loader.Parse("scenes\\mitsuba_veach_mis\\plate1.obj");
+    Reference<Shape> plate1 = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size()/3, (int)obj_loader.m_Points.size(),
+            obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
+            obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
+            obj_loader.m_Normals.size()>0 ? &obj_loader.m_Normals[0] : NULL,
+            0,
+            obj_loader.m_uvs.size()>0 ? &obj_loader.m_uvs[0] : NULL));
+	Material *m2 = new PhongMaterial(Spectrum(Vec3(0.07f, 0.09f, 0.13f)), 1000.0f);
+    Primitive *g2 = new GeometricPrimitive(plate1, m2, NULL);
+    if (!g2->CanIntersect())
+    {
+        list<Reference<Primitive> > refinedPrimitives;
+        g2->FullyRefine(refinedPrimitives);
+        g2 = new DummyAccelerator(refinedPrimitives);
+    }
+
+
+    //plate2
+    obj_loader.Parse("scenes\\mitsuba_veach_mis\\plate2.obj");
+    Reference<Shape> plate2 = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size()/3, (int)obj_loader.m_Points.size(),
+            obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
+            obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
+            obj_loader.m_Normals.size()>0 ? &obj_loader.m_Normals[0] : NULL,
+            0,
+            obj_loader.m_uvs.size()>0 ? &obj_loader.m_uvs[0] : NULL));
+	Material *m3 = new PhongMaterial(Spectrum(Vec3(0.07f, 0.09f, 0.13f)), 300.0f);
+    Primitive* g3 = new GeometricPrimitive(plate2, m3, NULL);
+    if (!g3->CanIntersect())
+    {
+        list<Reference<Primitive> > refinedPrimitives;
+        g3->FullyRefine(refinedPrimitives);
+        g3 = new DummyAccelerator(refinedPrimitives);
+    }
+
+
+    //plate3
+    obj_loader.Parse("scenes\\mitsuba_veach_mis\\plate3.obj");
+    Reference<Shape> plate3 = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size()/3, (int)obj_loader.m_Points.size(),
+            obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
+            obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
+            obj_loader.m_Normals.size()>0 ? &obj_loader.m_Normals[0] : NULL,
+            0,
+            obj_loader.m_uvs.size()>0 ? &obj_loader.m_uvs[0] : NULL));
+	Material *m4 = new PhongMaterial(Spectrum(Vec3(0.07f, 0.09f, 0.13f)), 200.0f);
+    Primitive* g4 = new GeometricPrimitive(plate3, m4, NULL);
+    if (!g4->CanIntersect())
+    {
+        list<Reference<Primitive> > refinedPrimitives;
+        g4->FullyRefine(refinedPrimitives);
+        g4 = new DummyAccelerator(refinedPrimitives);
+    }
+
+
+    //plate4  front
+    obj_loader.Parse("scenes\\mitsuba_veach_mis\\plate4.obj");
+    Reference<Shape> plate4 = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size()/3, (int)obj_loader.m_Points.size(),
+            obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
+            obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
+            obj_loader.m_Normals.size()>0 ? &obj_loader.m_Normals[0] : NULL,
+            0,
+            obj_loader.m_uvs.size()>0 ? &obj_loader.m_uvs[0] : NULL));
+	Material *m5 = new PhongMaterial(Spectrum(Vec3(0.07f, 0.09f, 0.13f)), 50.0f);
+    Primitive* g5 = new GeometricPrimitive(plate4, m5, NULL);
+    if (!g5->CanIntersect())
+    {
+        list<Reference<Primitive> > refinedPrimitives;
+        g5->FullyRefine(refinedPrimitives);
+        g5 = new DummyAccelerator(refinedPrimitives);
+    }
+
+
+
+	Transform t11a = Transform::CreateTranslate(-3.75f, 0.0f, 0.0f);
+	Transform t11b = t11a.GetInverse();
+	Reference<Shape> s11 = Reference<Shape>(new Sphere(&t11a, &t11b, 0.03333f));
+	Material *m11 = new DiffuseMaterial(Spectrum(0.0f));
+	Spectrum a3l = Spectrum(Vec3(901.803, 901.803 ,901.803));
+	DiffuseAreaLight * a3 = new DiffuseAreaLight(t11a, a3l, s11);
+	GeometricPrimitive* g11 = new GeometricPrimitive(s11, m11, a3);
+	primitives.push_back(g11);
+	lights.push_back(a3);
+
+	Transform t10a = Transform::CreateTranslate(-1.25f, 0.0f, 0.0f);
+	Transform t10b = t10a.GetInverse();
+	Reference<Shape> s10 = Reference<Shape>(new Sphere(&t10a, &t10b, 0.1f));
+	Material *m10 = new DiffuseMaterial(Spectrum(0.0f));
+	Spectrum a2l = Spectrum(Vec3(100, 100, 100));
+	DiffuseAreaLight * a2 = new DiffuseAreaLight(t10a, a2l, s10);
+	GeometricPrimitive* g10 = new GeometricPrimitive(s10, m10, a2);
+	primitives.push_back(g10);
+	lights.push_back(a2);
+
+	Transform t12a = Transform::CreateTranslate(1.25f, 0.0f, 0.0f);
+	Transform t12b = t12a.GetInverse();
+	Reference<Shape> s12 = Reference<Shape>(new Sphere(&t12a, &t12b, 0.3f));
+	Material *m12 = new DiffuseMaterial(Spectrum(0.0f));
+	Spectrum a4l = Spectrum(Vec3(11.1111, 11.1111 ,11.1111));
+	DiffuseAreaLight * a4 = new DiffuseAreaLight(t12a, a4l, s12);
+	GeometricPrimitive* g12 = new GeometricPrimitive(s12, m12, a4);
+	primitives.push_back(g12);
+	lights.push_back(a4);
+
+	Transform t13a = Transform::CreateTranslate(3.75f, 0.0f, 0.0f);
+	Transform t13b = t13a.GetInverse();
+	Reference<Shape> s13 = Reference<Shape>(new Sphere(&t13a, &t13b, 0.9f));
+	Material *m13 = new DiffuseMaterial(Spectrum(0.0f));
+	Spectrum a5l = Spectrum(Vec3(1.23457, 1.23457, 1.23457));
+	DiffuseAreaLight * a5 = new DiffuseAreaLight(t13a, a5l, s13);
+	GeometricPrimitive* g13 = new GeometricPrimitive(s13, m13, a5);
+	primitives.push_back(g13);
+	lights.push_back(a5);
+ 
+
+    //Accelerator
+    primitives.push_back(g1);
+	
+	primitives.push_back(g2);
+    primitives.push_back(g3);
+    primitives.push_back(g4);
+    primitives.push_back(g5);
+
+    Primitive *accelerator = new DummyAccelerator(primitives);
+
+    //create film
+    Film * film = new Image(512, 384, filename);
+
+    //create camera
+	Transform cam2world = Transform::CreateLookAt(Point(0.0f, 2.0f, 15.0f), Point(0.0f, -2.0f, 2.5f), Vec3(0.0f, 1.0f, 0.0f)).GetInverse();
+
+    float aspectratio =float(film->GetWidth())/float(film->GetHeight());
+    float screenWindow[4];
+    if (aspectratio > 1.f)
+    {
+        screenWindow[0] = -aspectratio;
+        screenWindow[1] =  aspectratio;
+        screenWindow[2] = -1.f;
+        screenWindow[3] =  1.f;
+    }
+    else
+    {
+        screenWindow[0] = -1.f;
+        screenWindow[1] =  1.f;
+        screenWindow[2] = -1.f / aspectratio;
+        screenWindow[3] =  1.f / aspectratio;
+    }
+    float fov = 28.0f;
+    PerspectiveCamera *camera = new PerspectiveCamera(cam2world, screenWindow, fov, film);
+
+    //integrator
+    VolumeIntegrator* volume_integrator = nullPtr;
+//    SurfaceIntegrator* surface_integrator =  new AmbientOcclusion(10, 10.0f);
+    SurfaceIntegrator* surface_integrator =  new DirectLighting();
+
+    //renderer
+    Renderer * renderer = new Sampler(surface_integrator, volume_integrator, samples);
+
+    //scene
+    Scene* scene = new Scene(accelerator, lights, camera);
+
+    renderer->Render(scene);
+
+    film->WriteImage();
+}
 
 
 int main()
@@ -952,5 +1378,9 @@ int main()
 //	task04();
 
 //	tp1_4();
-	tp1_5(2, "uniform_direct_lighting_2_samples_1024x768.tga");
+
+//	tp1_5(2, "uniform_direct_lighting_2_samples_1024x768.tga");
+
+//	mitsuba_cbox(1, "uniform_direct_lighting_2_samples_1024x768.tga");
+	mitsuba_veach_mis(256, "uniform_direct_lighting_2_samples_1024x768.tga");
 }

@@ -2,57 +2,72 @@
 
 class BBox;
 
-GeometricPrimitive::GeometricPrimitive(Shape* s, Material* m, AreaLight *a) : m_shape(s), m_material(m), m_areaLight(a)
+GeometricPrimitive::GeometricPrimitive(Reference<Shape> s, Reference<Material> m, AreaLight *a) : m_Shape(s), m_Material(m), m_AreaLight(a)
 {
 }
 
+void GeometricPrimitive::Refine(list<Reference<Primitive> > &refined) const
+{
+    vector<Reference<Shape> > r;
+    m_Shape->Refine(r);
+    for (uint32_t i = 0; i < r.size(); ++i)
+    {
+        GeometricPrimitive *gp = new GeometricPrimitive(r[i], m_Material, m_AreaLight);
+        refined.push_back(gp);
+    }
+}
+
+
 BBox GeometricPrimitive::WorldBound() const 
 {
-    return m_shape->WorldBound();
+    return m_Shape->WorldBound();
 }
 
 bool GeometricPrimitive::IsIntersected(const Ray &r) const 
 {
-    return m_shape->IsIntersected(r);
+    return m_Shape->IsIntersected(r);
 }
 
 bool GeometricPrimitive::CanIntersect() const 
 {
-    return m_shape->CanIntersect();
+    return m_Shape->CanIntersect();
 }
 
-bool GeometricPrimitive::GetIntersection(const Ray &r, Intersection& isect) const 
+bool GeometricPrimitive::GetIntersection(const Ray &r, Intersection& isect) const
 {
-    float thit, rayEpsilon;
-    if (!m_shape->GetIntersection(r, &thit, &rayEpsilon, isect))
+    float thit;
+    if (!m_Shape->GetIntersection(r, &thit, isect.m_DifferentialGeometry))
         return false;
+
+    isect.m_Primitive =  const_cast<GeometricPrimitive*>(this);
+    isect.m_WorldToObject = *m_Shape->m_WorldToObject;
+    isect.m_ObjectToWorld = *m_Shape->m_ObjectToWorld;
 /*
-    isect.primitive = this;
-    isect.WorldToObject = *shape->WorldToObject;
-    isect.ObjectToWorld = *shape->ObjectToWorld;
     isect.shapeId = shape->shapeId;
     isect.primitiveId = primitiveId;
-    isect.rayEpsilon = rayEpsilon;
-    r.maxt = thit;
+*/
+    const_cast<Ray &>(r).maxt = thit;  //todo very bad
 
-*/    return true;
+    return true;
 }
 
-/*
 const AreaLight *GeometricPrimitive::GetAreaLight() const
 {
-    return areaLight;
+    return m_AreaLight;
 }
 
-
-BSDF *GeometricPrimitive::GetBSDF(const DifferentialGeometry &dg, const Transform &ObjectToWorld, ) const 
+const Reference<Shape> GeometricPrimitive::GetShape() const
 {
-    DifferentialGeometry dgs;
-    shape->GetShadingGeometry(ObjectToWorld, dg, &dgs);
-    return material->GetBSDF(dg, dgs, arena);
+    return m_Shape;
+}
+
+BSDF *GeometricPrimitive::GetBSDF(const DifferentialGeometry& dg, const Transform &ObjectToWorld) const
+{
+	return m_Material->GetBSDF(dg);
 }
 
 
+/*
 BSSRDF *GeometricPrimitive::GetBSSRDF(const DifferentialGeometry &dg,
                                   const Transform &ObjectToWorld,
                                   MemoryArena &arena) const {

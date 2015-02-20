@@ -1,3 +1,7 @@
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #ifndef __RENDERMOON_CORE_LIGHT__
 #define __RENDERMOON_CORE_LIGHT__
 
@@ -5,18 +9,23 @@
 class Spectrum;
 struct Intersection;
 class Ray;
+class Scene;
 
 class Light
 {
 
 public:
-	Light(Transform& t) { m_lightToWorld = t; m_worldToLight = m_lightToWorld.GetInverse(); }
-    virtual ~Light() {}
+	Light(const Transform& t);
+    virtual ~Light();
 
-    virtual bool GetIntersection(const Ray &ray, Intersection&) const =0;
-    virtual bool IsIntersected(const Ray &ray) const  =0;
-	virtual  void GetRandomSample(Normal& n, Point& p) const  =0;
+    virtual float Pdf(const Point &p, const Vec3 &wi) const = 0;
 
+    virtual Spectrum Sample_L(const Point &p, float pEpsilon, float time, Vec3 *wi, float *pdf) const = 0;
+    virtual Spectrum Sample_L(const Scene *scene, float u1, float u2, float time, Ray *ray, Normal *Ns, float *pdf) const = 0;
+
+    virtual Spectrum Le(const Ray &r) const;
+
+protected:
 	Transform m_lightToWorld, m_worldToLight;
 };
 #endif

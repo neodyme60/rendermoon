@@ -1,3 +1,7 @@
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #ifndef __RENDERMOON_POINT_LIGHT__
 #define __RENDERMOON_POINT_LIGHT__
 
@@ -7,19 +11,18 @@ class PointLight : public Light
 {
 public:
 
-    PointLight(Transform& l2w, Spectrum & intensity);
+    PointLight(const Transform& l2w, const Spectrum& intensity);
     virtual ~PointLight() {}
 
-	Spectrum L(Intersection& i, Point& light_point, Normal& light_nornal)
-	{
-		return Spectrum();
-	}
+    //implement light
+    virtual float Pdf(const Point &p, const Vec3 &wi) const;
+    Spectrum Sample_L(const Point &p, float pEpsilon, float time, Vec3 *wi, float *pdf) const;
+    Spectrum Sample_L(const Scene *scene, float u1, float u2, float time, Ray *ray, Normal *Ns, float *pdf) const;
 
-	bool GetIntersection(const Ray &r, Intersection&)   { return false; }
-	bool IsIntersected(const Ray &r) { return false; } 
 
-	void GetRandomSample(Normal& n, Point& p) const {}
-
+protected:
+    Point m_LightPos;
+    Spectrum m_Intensity;
 };
 
 #endif

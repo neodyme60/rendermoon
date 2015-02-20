@@ -14,7 +14,7 @@ float OrthographicCamera::GenerateRay(const CameraSample &sample, Ray *ray) cons
     Point Pras(sample.imageX, sample.imageY, 0);
     Point Pcamera;
     m_RasterToCamera.TransformPoint(Pras, &Pcamera);
-    *ray = Ray(Pcamera, Vec3(0,0,1), 0.f, max_inf);
+    *ray = Ray(Pcamera, Vec3(0.0f, 0.0f, 1.0f), 0.0f, max_inf);
     ray->SetTime(sample.time);
     m_CameraToWorld.TransformRay(*ray, ray);
     return 1.0f;

@@ -1,5 +1,21 @@
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 #ifndef __RENDERMOON_CORE_MATH__
 #define __RENDERMOON_CORE_MATH__
+
+
+#ifdef M_PI
+#undef M_PI
+#endif
+#define M_PI       3.14159265358979323846f
+#define INV_PI     0.31830988618379067154f
+#define INV_TWOPI  0.15915494309189533577f
+#define INV_FOURPI 0.07957747154594766788f
+#ifndef INFINITY
+#define INFINITY FLT_MAX
+#endif
 
 class Point;
 class Normal;
@@ -418,6 +434,169 @@ inline float AbsDot(const Vec3 &v1, const Normal &n2) {
 inline float AbsDot(const Normal &n1, const Normal &n2) {
  //   Assert(!n1.HasNaNs() && !n2.HasNaNs());
     return fabsf(n1.x * n2.x + n1.y * n2.y + n1.z * n2.z);
+}
+
+ inline void CoordinateSystem(const Vec3 &v1, Vec3 *v2, Vec3 *v3)
+ {
+    if (fabsf(v1.x) > fabsf(v1.y))
+    {
+         float invLen = 1.f / sqrtf(v1.x*v1.x + v1.z*v1.z);
+         *v2 = Vec3(-v1.z * invLen, 0.f, v1.x * invLen);
+     }
+    else {
+         float invLen = 1.f / sqrtf(v1.y*v1.y + v1.z*v1.z);
+         *v2 = Vec3(0.f, v1.z * invLen, -v1.y * invLen);
+     }
+    *v3 = Cross(v1, *v2);
+}
+
+
+inline float Distance(const Point &p1, const Point &p2)
+{
+    return (p1 - p2).Length();
+}
+
+
+inline float DistanceSquared(const Point &p1, const Point &p2)
+{
+    return (p1 - p2).LengthSquared();
+}
+
+
+////
+
+/////
+
+inline float Lerp(float t, float v1, float v2) {
+    return (1.f - t) * v1 + t * v2;
+}
+
+
+inline float Clamp(float val, float low, float high) {
+    if (val < low) return low;
+    else if (val > high) return high;
+    else return val;
+}
+
+
+inline int Clamp(int val, int low, int high) {
+    if (val < low) return low;
+    else if (val > high) return high;
+    else return val;
+}
+
+
+inline int Mod(int a, int b) {
+    int n = int(a/b);
+    a -= n*b;
+    if (a < 0) a += b;
+    return a;
+}
+
+
+inline float Radians(float deg) {
+    return ((float)M_PI/180.f) * deg;
+}
+
+
+inline float Degrees(float rad) {
+    return (180.f/(float)M_PI) * rad;
+}
+
+
+inline float Log2(float x) {
+    static float invLog2 = 1.f / logf(2.f);
+    return logf(x) * invLog2;
+}
+
+
+inline int Floor2Int(float val);
+inline int Log2Int(float v) {
+    return Floor2Int(Log2(v));
+}
+
+
+inline bool IsPowerOf2(int v) {
+    return (v & (v - 1)) == 0;
+}
+
+/*
+inline uint32_t RoundUpPow2(uint32_t v) {
+    v--;
+    v |= v >> 1;    v |= v >> 2;
+    v |= v >> 4;    v |= v >> 8;
+    v |= v >> 16;
+    return v+1;
+}
+*/
+
+inline int Floor2Int(float val) {
+    return (int)floorf(val);
+}
+
+
+inline int Round2Int(float val) {
+    return Floor2Int(val + 0.5f);
+}
+
+
+inline int Float2Int(float val) {
+    return (int)val;
+}
+
+
+inline int Ceil2Int(float val) {
+    return (int)ceilf(val);
+}
+
+
+
+// BSDF Inline Functions
+ inline float CosTheta(const Vec3 &w) { return w.z; }
+ inline float AbsCosTheta(const Vec3 &w) { return fabsf(w.z); }
+ inline float SinTheta2(const Vec3 &w) {
+    return max(0.f, 1.f - CosTheta(w)*CosTheta(w));
+ }
+
+ inline float SinTheta(const Vec3 &w) {
+    return sqrtf(SinTheta2(w));
+ }
+
+ inline float CosPhi(const Vec3 &w) {
+    float sintheta = SinTheta(w);
+    if (sintheta == 0.f) return 1.f;
+    return Clamp(w.x / sintheta, -1.f, 1.f);
+ }
+
+inline float SinPhi(const Vec3 &w)
+{
+    float sintheta = SinTheta(w);
+    if (sintheta == 0.f) return 0.f;
+    return Clamp(w.y / sintheta, -1.f, 1.f);
+ }
+
+ inline bool SameHemisphere(const Vec3 &w, const Vec3 &wp) {
+    return w.z * wp.z > 0.f;
+}
+
+
+///////////////////mc
+
+// Monte Carlo Function Definitions
+void RejectionSampleDisk(float *x, float *y, float u1, float u2);
+Vec3 UniformSampleHemisphere(float u1, float u2);
+float UniformHemispherePdf();
+Vec3 UniformSampleSphere(float u1, float u2);
+float UniformSpherePdf();
+void UniformSampleDisk(float u1, float u2, float *x, float *y);
+void ConcentricSampleDisk(float u1, float u2, float *dx, float *dy);
+void UniformSampleTriangle(float u1, float u2, float *u, float *v);
+
+inline Vec3 CosineSampleHemisphere(float u1, float u2) {
+    Vec3 ret;
+    ConcentricSampleDisk(u1, u2, &ret.x, &ret.y);
+    ret.z = sqrtf(max(0.f, 1.f - ret.x*ret.x - ret.y*ret.y));
+    return ret;
 }
 
 #endif

@@ -3,23 +3,34 @@
 class GeometricPrimitive;
 struct Intersection;
 
+BSDF* DummyAccelerator::GetBSDF(const DifferentialGeometry &dg, const Transform &) const
+{
+    return NULL;
+}
+
+const AreaLight* DummyAccelerator::GetAreaLight() const
+{
+    return NULL;
+}
+
 bool DummyAccelerator::GetIntersection(const Ray &r, Intersection& i) const
 {
     bool has_intersection = false;
 	Intersection intersection_tmp;
+	float max_intersection_distance = r.maxt;
 
-	list<::Primitive *>::const_iterator iterator;
+	list<Reference<Primitive>>::const_iterator iterator;
     for (iterator = m_data.begin(); iterator != m_data.end(); ++iterator)
 	{
-        Primitive * p = *iterator;
+        Reference<Primitive>  p = *iterator;
 		if (p->GetIntersection(r, intersection_tmp))
 		{
-            if (intersection_tmp.t < i.t)
+            if (r.maxt < max_intersection_distance)
 			{
-                i.p = intersection_tmp.p;
-                i.n = intersection_tmp.n;
-				i.t = intersection_tmp.t;
-				i.primitive = p;
+                i.m_DifferentialGeometry.m_Point = intersection_tmp.m_DifferentialGeometry.m_Point;
+                i.m_DifferentialGeometry.m_Normal = intersection_tmp.m_DifferentialGeometry.m_Normal;
+				i.m_Primitive = intersection_tmp.m_Primitive;
+				max_intersection_distance = r.maxt;
                 has_intersection = true;
 			}				
 		}
@@ -29,6 +40,14 @@ bool DummyAccelerator::GetIntersection(const Ray &r, Intersection& i) const
 
 bool DummyAccelerator::IsIntersected(const Ray &r) const
 {
-	return true;
+	list<Reference<Primitive>>::const_iterator iterator;
+	for (iterator = m_data.begin(); iterator != m_data.end(); ++iterator)
+	{
+        Reference<Primitive>  p = *iterator;
+		if (p->IsIntersected(r))
+			return true;
+	}
+
+	return false;
 }
 

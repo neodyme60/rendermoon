@@ -18,7 +18,7 @@ float PerspectiveCamera::GenerateRay(const CameraSample &sample, Ray *ray) const
 //	Pcamera.x=0;
 	//Pcamera.y=0;
 
-    *ray = Ray(Point(0.0f, 0.0f, 0.0f), Normalize(Vec3(Pcamera.x, Pcamera.y, Pcamera.z)), 0.0f, max_inf);
+    *ray = Ray(Point(0.0f, 0.0f, 0.0f), Normalize(Vec3(Pcamera.x, Pcamera.y, Pcamera.z)), 0.1f, max_inf);
 
     ray->SetTime(sample.time);
     m_CameraToWorld.TransformRay(*ray, ray);
