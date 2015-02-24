@@ -18,7 +18,9 @@ include_directories("external/eigen")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES src/main.cpp
+set(SOURCE_FILES
+                src/rendermoon.cpp
+                src/main.cpp
                 src/core/memory.cpp
                 src/core/monte_carlo.cpp
                 src/core/parallel.cpp
@@ -51,8 +53,11 @@ set(SOURCE_FILES src/main.cpp
                 src/core/geometric_primitive.cpp
                 src/core/material.cpp
                 src/core/shape.cpp
-
+                src/core/volume_integrator.cpp
+                src/core/surface_integrator.cpp
                 src/core/paramset.cpp
+                src/core/visibility_tester.cpp
+                src/core/shape_set.cpp
 
                 src/materials/diffuse.cpp
                 src/materials/phong.cpp
@@ -69,9 +74,8 @@ set(SOURCE_FILES src/main.cpp
 
                 src/film/image.cpp
                 src/accelerator/dummy_accelerator.cpp
+                src/accelerator/bvh.cpp
                 src/renderer/sampler.cpp
-                src/core/volume_integrator.cpp
-                src/core/surface_integrator.cpp
 
                 src/integrators/direct_lighting.cpp
                 src/integrators/ambient_occlusion.cpp
