@@ -4,47 +4,60 @@ class Ray;
 class Spectrum;
 struct Intersection;
 
-Spectrum PathTracing::Li(const Scene& scene, const Renderer& renderer, const Ray& ray, const Intersection &intersection)
+PathTracing::PathTracing(DirectLightingStrategy dls) : m_dls(dls)
 {
-    Spectrum L = Spectrum(0.0f);
 
-    BSDF * bsdf = intersection.GetBSDF(ray);
-    Vec3 wo = -ray.m_direction;
-    Vec3 wi;
-    float pdf;
-    Point p;
+}
 
-    L += DirectLightingEstimate(scene, 0, intersection.m_DifferentialGeometry.m_Point, intersection.m_DifferentialGeometry.m_Normal, wo, ray.m_time, bsdf);
+PathTracing::~PathTracing()
+{
 
-    L = Spectrum(0.0f);
+}
 
-    Intersection isec = intersection;
-    Ray r = ray;
+Spectrum PathTracing::Li(const Scene& scene, const Renderer& renderer, const Ray& r, const Intersection &intersection)
+{
+    Spectrum L(1.0f);
 
-    for(int i=0; i < 2; i++ )
+	Ray ray(r.GetOrigin(), r.GetDirection(), 0.1f, INFINITY);
+	Intersection isec;
+
+    for(int i=0; i < 3; i++ )
     {
-        L = Spectrum(1.0f);
+		if (!scene.GetIntersection(ray, isec))
+			return Spectrum(0.0f);
 
-		r.maxt = INFINITY;
-        if (!scene.GetIntersection(r, isec))
-            return Spectrum(0.0f);
+		BSDF * bsdf = isec.GetBSDF(ray);
 
-        bsdf = isec.GetBSDF(r);
+		const Point &p = isec.m_DifferentialGeometry.m_Point;
+		const Normal &n = isec.m_DifferentialGeometry.m_Normal;
 
-        Spectrum s = bsdf->Sample_f(wo, wi, &pdf);
+		Vec3 wo = -ray.m_direction;
 
-        r.m_direction = wi;
-        r.m_origin = isec.m_DifferentialGeometry.m_Point;
+		//get a new direction by sampling brdf
+		Vec3 wi;
+		float brdf_sample_pdf;
+		Spectrum f = bsdf->Sample_f(wo, wi, &brdf_sample_pdf);
 
-        if (isec.m_Primitive->GetAreaLight()!=0)
-        {
-            L = L * isec.m_Primitive->GetAreaLight()->Le(r);
-            return L;
-        }
+		//set next indirect bouncing ray
+		ray = Ray(p, wi, 0.1f, INFINITY);
 
-        L = L * bsdf->f(wo, wi) * s * (1.0  / pdf);
+		//do we hit a light ?
+		if (isec.m_Primitive->GetAreaLight())
+		{
+			L = L * isec.Le(wo);
+			return L;
+		}
 
+		//direct lighting contribution
+		Spectrum Ld = DirectLightingEstimate(scene, renderer, p, n, wo, 0.0, bsdf, m_dls);
+
+		//indirect
+		L = Ld;// +L * f  * AbsDot(n, wi) / brdf_sample_pdf;
+
+        //!!!!
+        delete bsdf;
     }
 
-    return L;
+	//we hit no light
+	return Spectrum(0.0f);
 }

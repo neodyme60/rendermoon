@@ -7,6 +7,17 @@ BSDF::BSDF(const Normal &n)
     CoordinateSystem(Vec3(m_normal), &m_tn, &m_sn);
 }
 
+BSDF::~BSDF()
+{
+    for (std::vector< BxDF* >::iterator it = m_bxdfs.begin() ; it != m_bxdfs.end(); ++it)
+    {
+		BxDF * ptr = *it;
+        delete ptr;
+    }
+    m_bxdfs.clear();
+}
+
+
 void BSDF::Add(BxDF *bxdf)
 {
     m_bxdfs.push_back(bxdf);

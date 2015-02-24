@@ -10,7 +10,7 @@
 class DiffuseAreaLight : public AreaLight
 {
 public:
-    DiffuseAreaLight(const Transform& l2w, const Spectrum & intensity, const Reference<Shape> &shape);
+    DiffuseAreaLight(const Transform& l2w, const Spectrum & intensity, int samples_count, const Reference<Shape> &shape);
     virtual ~DiffuseAreaLight();
 
     //implement arealight
@@ -18,12 +18,13 @@ public:
 
     //implement light
     virtual float Pdf(const Point &p, const Vec3 &wi) const;
-    Spectrum Sample_L(const Point &p, float pEpsilon, float time, Vec3 *wi, float *pdf) const;
+    Spectrum Sample_L(const Point &p, float pEpsilon, float time, Vec3 *wi, float *pdf, VisibilityTester& vis) const;
     Spectrum Sample_L(const Scene *scene, float u1, float u2, float time, Ray *ray, Normal *Ns, float *pdf) const;
 
 protected:
-    Spectrum m_Lemit;
-    float area;
+    Spectrum    m_Lemit;
+    ShapeSet*   m_ShapeSet;
+    float       m_area;
 };
 
 #endif

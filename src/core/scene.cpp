@@ -2,7 +2,7 @@
 
 class Ray;
 
-Scene::Scene(Primitive* accelerator, std::list<Light*> lights, Camera* camera)
+Scene::Scene(Primitive* accelerator, vector<Light*> lights, Camera* camera)
 {
     m_accelerator = accelerator;
     m_camera = camera;
@@ -13,7 +13,6 @@ Camera* Scene::GetCamera() const
 {
     return m_camera;
 }
-
 
 bool Scene::IsIntersected(const Ray &r) const
 {

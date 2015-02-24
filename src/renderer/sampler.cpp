@@ -13,6 +13,7 @@ Spectrum Sampler::Li(const Scene *scene, const Ray& ray, Intersection &i)
 	{
 		if (scene->GetIntersection(ray, i))
 		{
+			return Spectrum(1.0f);
 			Li = m_surfaceIntegrator->Li(*scene, *this, ray, i);
 		}
 		else
@@ -45,6 +46,7 @@ void Sampler::Render(const Scene *scene)
 				camera->GenerateRay(cameraSample, &ray);
 				Li += this->Li(scene, ray, i);
 			}
+            printf("%d\n", int(100.0f*float(y * film->GetWidth()+x)/float(film->GetWidth()*film->GetHeight())) );
 			Li/=m_samples;
 
 			film->AddSample(cameraSample, Li);

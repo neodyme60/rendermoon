@@ -1,6 +1,6 @@
 #include <rendermoon.h>
 
-Shape::Shape(const Transform *o2w, const Transform *w2o) : m_ObjectToWorld(o2w), m_WorldToObject(w2o)
+Shape::Shape(const Transform *o2w, const Transform *w2o, bool ro) : m_ObjectToWorld(o2w), m_WorldToObject(w2o), m_ReverseOrientation(ro)
 {
 }
 
@@ -17,7 +17,7 @@ BBox Shape::WorldBound() const
 	return m_ObjectToWorld->TransformBBox(ObjectBound());
 }
 
-bool Shape::CanIntersect() const 
+bool Shape::CanIntersect() const
 {
     return true;
 }
@@ -57,7 +57,7 @@ float Shape::Pdf(const Point &p, const Vec3 &wi) const
     // Intersect sample ray with area light geometry
     DifferentialGeometry dgLight;
     Ray ray(p, wi, 1e-3f);
-    float thit, rayEpsilon;
+    float thit;
     if (!GetIntersection(ray, &thit, dgLight))
         return 0.0f;
 

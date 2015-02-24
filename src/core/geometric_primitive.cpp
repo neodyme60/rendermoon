@@ -6,7 +6,7 @@ GeometricPrimitive::GeometricPrimitive(Reference<Shape> s, Reference<Material> m
 {
 }
 
-void GeometricPrimitive::Refine(list<Reference<Primitive> > &refined) const
+void GeometricPrimitive::Refine(vector<Reference<Primitive> > &refined) const
 {
     vector<Reference<Shape> > r;
     m_Shape->Refine(r);

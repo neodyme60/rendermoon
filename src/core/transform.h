@@ -59,10 +59,10 @@ public:
     Mat4 m, mInv;
 
     Transform();
-    Transform(Mat4& t);
-    Transform(Mat4& t, Mat4& t_inv);
+    Transform(const Mat4& t);
+    Transform(const Mat4& t, const Mat4& t_inv);
 
-    Transform GetInverse();
+    Transform GetInverse() const;
 
 	BBox TransformBBox(const BBox &b) const;
 

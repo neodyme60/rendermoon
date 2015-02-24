@@ -4,3 +4,9 @@ BSDF *Aggregate::GetBSDF(const DifferentialGeometry& dg, const Transform &Object
 {
 	return NULL;
 }
+
+const AreaLight *Aggregate::GetAreaLight() const
+{
+//    Severe("Aggregate::GetAreaLight() method called; should have gone to GeometricPrimitive");
+    return NULL;
+}

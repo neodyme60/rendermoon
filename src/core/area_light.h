@@ -14,7 +14,7 @@ class Shape;
 class AreaLight : public Light
 {
 public:
-    AreaLight(const Transform& l2w, const Reference<Shape> &shape);
+    AreaLight(const Transform& l2w, const Reference<Shape> &shape, int samples_count);
     virtual ~AreaLight();
 
     virtual Spectrum L(const Point &p, const Normal &n, const Vec3 &w) const = 0;

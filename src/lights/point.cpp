@@ -10,10 +10,11 @@ float PointLight::Pdf(const Point &p, const Vec3 &wi) const
 	return 0.0f;
 }
 
-Spectrum PointLight::Sample_L(const Point &p, float pEpsilon, float time, Vec3 *wi, float *pdf) const
+Spectrum PointLight::Sample_L(const Point &p, float pEpsilon, float time, Vec3 *wi, float *pdf, VisibilityTester &visibility) const
 {
     *wi = Normalize(m_LightPos-p);
     *pdf = 1.0f;
+    visibility.SetSegment(p, pEpsilon, m_LightPos, 0.0f, time);
     return m_Intensity * (1.0f / DistanceSquared(m_LightPos, p));
 }
 

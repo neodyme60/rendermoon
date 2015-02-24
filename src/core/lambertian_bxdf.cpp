@@ -7,10 +7,9 @@ LambertianBxDF::LambertianBxDF(const Spectrum& reflectance) : m_Reflectance(refl
 
 LambertianBxDF::~LambertianBxDF()
 {
-
 }
 
-float LambertianBxDF::Pdf(const Vec3& wi, const Vec3& wo) const
+float LambertianBxDF::Pdf(const Vec3& wo, const Vec3& wi) const
 {
     return AbsCosTheta(wi) * INV_PI; //importance sampling
 }

@@ -12,6 +12,7 @@ class BSDF
 {
 public:
     BSDF(const Normal &n);
+    ~BSDF();
     void Add(BxDF* bxdf);
 
     Vec3 WorldToLocal(const Vec3 &v) const;

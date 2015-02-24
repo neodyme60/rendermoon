@@ -11,7 +11,6 @@ Intersection::Intersection()
     m_Primitive = NULL;
 }
 
-
 Spectrum Intersection::Le(const Vec3 &w) const
 {
     const AreaLight *area = m_Primitive->GetAreaLight();

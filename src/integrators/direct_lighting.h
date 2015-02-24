@@ -10,10 +10,13 @@
 class DirectLighting : public SurfaceIntegrator
 {
 public:
-    DirectLighting() {}
-    virtual ~DirectLighting() {}
+    DirectLighting(DirectLightingStrategy dle = DIRECT_LIGHTING_MIS);
+    virtual ~DirectLighting();
 
     Spectrum Li(const Scene&, const Renderer&, const Ray&, const Intersection &i);
+
+protected:
+    DirectLightingStrategy m_dls;
 };
 
 #endif

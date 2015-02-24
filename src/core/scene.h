@@ -13,14 +13,16 @@ class Light;
 struct Intersection;
 class Primitive;
 
+using namespace std;
+
 class Scene
 {
 public:
-    Primitive*				        m_accelerator;
-    Camera*					        m_camera;
-    std::list<Light*>               m_lights;
+    Primitive*      m_accelerator;
+    Camera*			m_camera;
+    vector<Light*>  m_lights;
 
-	Scene(Primitive*, std::list<Light*>, Camera*);
+	Scene(Primitive*, vector<Light*>, Camera*);
     virtual ~Scene(){}
 
 

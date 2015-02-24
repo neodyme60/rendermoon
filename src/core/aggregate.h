@@ -12,9 +12,8 @@ class BSDF;
 class Aggregate : public Primitive 
 {
 public:
-/*
     const AreaLight *GetAreaLight() const;
-*/
+
     BSDF *GetBSDF(const DifferentialGeometry& dg, const Transform &ObjectToWorld) const;
 };
 

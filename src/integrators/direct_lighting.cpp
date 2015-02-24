@@ -4,6 +4,15 @@ class Ray;
 class Spectrum;
 struct Intersection;
 
+DirectLighting::DirectLighting(DirectLightingStrategy dls) : m_dls(dls)
+{
+}
+
+DirectLighting::~DirectLighting()
+{
+
+}
+
 Spectrum DirectLighting::Li(const Scene& scene, const Renderer& renderer, const Ray& ray, const Intersection &intersection)
 {
 	Spectrum L = Spectrum(0.0f);
@@ -16,7 +25,9 @@ Spectrum DirectLighting::Li(const Scene& scene, const Renderer& renderer, const 
     const Point &p = intersection.m_DifferentialGeometry.m_Point;
     const Normal &n = intersection.m_DifferentialGeometry.m_Normal;
 
-	L += DirectLightingEstimate(scene, 0, intersection.m_DifferentialGeometry.m_Point, intersection.m_DifferentialGeometry.m_Normal, wo, ray.m_time, bsdf);
+	L += DirectLightingEstimate(scene, renderer, intersection.m_DifferentialGeometry.m_Point, intersection.m_DifferentialGeometry.m_Normal, wo, ray.m_time, bsdf, m_dls);
+
+	delete bsdf;
 
     return L;
 }

@@ -68,6 +68,14 @@ public:
         return c;
     }
 
+    Spectrum operator+(const Spectrum& s)  const
+    {
+        Spectrum c;
+        for(int i=0 ; i< 3; i++)
+            c.m_data[i]=s.m_data[i] + this->m_data[i];
+        return c;
+    }
+
     Spectrum operator*(float s)  const
     {
         Spectrum c;
@@ -75,6 +83,14 @@ public:
             c.m_data[i]=this->m_data[i] * s;
         return c;
     }
+
+	Spectrum operator/(float s)  const
+	{
+		Spectrum c;
+		for (int i = 0; i< 3; i++)
+			c.m_data[i] = this->m_data[i] / s;
+		return c;
+	}
 
     static Spectrum FromRGB(const float rgb[3])
     {

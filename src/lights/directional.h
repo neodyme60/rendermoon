@@ -15,7 +15,7 @@ public:
 
     //implement light
     virtual float Pdf(const Point &p, const Vec3 &wi) const;
-    Spectrum Sample_L(const Point &p, float pEpsilon, float time, Vec3 *wi, float *pdf) const;
+    Spectrum Sample_L(const Point &p, float pEpsilon, float time, Vec3 *wi, float *pdf, VisibilityTester &visibility) const;
     Spectrum Sample_L(const Scene *scene, float u1, float u2, float time, Ray *ray, Normal *Ns, float *pdf) const;
 
 protected:

@@ -3,6 +3,23 @@
 class GeometricPrimitive;
 struct Intersection;
 
+
+BBox DummyAccelerator::WorldBound() const
+{
+    return m_worldBound;
+}
+
+DummyAccelerator::DummyAccelerator(vector<Reference<Primitive>>& data)
+{
+    m_data = data;
+
+    vector<Reference<Primitive>>::const_iterator iterator;
+    for (iterator = m_data.begin(); iterator != m_data.end(); ++iterator)
+    {
+        m_worldBound = Union(m_worldBound, (*iterator)->WorldBound());
+    }
+}
+
 BSDF* DummyAccelerator::GetBSDF(const DifferentialGeometry &dg, const Transform &) const
 {
     return NULL;
@@ -19,7 +36,7 @@ bool DummyAccelerator::GetIntersection(const Ray &r, Intersection& i) const
 	Intersection intersection_tmp;
 	float max_intersection_distance = r.maxt;
 
-	list<Reference<Primitive>>::const_iterator iterator;
+    vector<Reference<Primitive>>::const_iterator iterator;
     for (iterator = m_data.begin(); iterator != m_data.end(); ++iterator)
 	{
         Reference<Primitive>  p = *iterator;
@@ -40,7 +57,7 @@ bool DummyAccelerator::GetIntersection(const Ray &r, Intersection& i) const
 
 bool DummyAccelerator::IsIntersected(const Ray &r) const
 {
-	list<Reference<Primitive>>::const_iterator iterator;
+    vector<Reference<Primitive>>::const_iterator iterator;
 	for (iterator = m_data.begin(); iterator != m_data.end(); ++iterator)
 	{
         Reference<Primitive>  p = *iterator;

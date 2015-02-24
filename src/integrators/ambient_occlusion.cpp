@@ -26,6 +26,8 @@ Spectrum AmbientOcclusion::Li(const Scene& scene, const Renderer& renderer, cons
             ++clear;
     }
 
+	delete bsdf;
+
 	return Spectrum(float(clear) / float(m_samples_count));
 }
 

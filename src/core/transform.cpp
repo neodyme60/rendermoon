@@ -121,19 +121,19 @@ Transform::Transform()
     mInv = Mat4();
 }
 
-Transform::Transform(Mat4& m)
+Transform::Transform(const Mat4& m)
 {
     this->m = m;
     this->mInv = Inverse(m);
 }
 
-Transform::Transform(Mat4& m, Mat4& mInv)
+Transform::Transform(const Mat4& m, const Mat4& mInv)
 {
     this->m = m;
     this->mInv = mInv;
 }
 
-Transform Transform::GetInverse()
+Transform Transform::GetInverse() const
 {
     return Transform(mInv, m);
 }

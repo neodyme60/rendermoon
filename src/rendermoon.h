@@ -1,5 +1,10 @@
 #ifndef __RAYMOON_HEADER__
 #define __RAYMOON_HEADER__
+
+#if defined(_MSC_VER)
+#pragma message("Compiling precompiled headers.")
+#endif
+
 /*
 #include <Eigen/Geometry>
 typedef Eigen::Matrix4f Mat4;
@@ -97,9 +102,18 @@ typedef unsigned __int64 uint64_t;
 
 //#define rm_infintiy numeric_limits<float>::infinity( )
 
+static unsigned int g_seed=98156273;
+
 inline float GetRandom()
 {
-    return (float) rand()/RAND_MAX;
+	float r;
+	do
+	{
+		g_seed = (214013*g_seed+25310011);
+		r = float((g_seed>>16)&0x7fff)/float(0x7fff);
+//		r = (float)rand() / RAND_MAX;
+	} while (r == 1.0f);
+	return r;
 }
 
 #include <core/memory.h>
@@ -146,6 +160,10 @@ inline float GetRandom()
 #include <core/film.h>
 #include <core/animated_transform.h>
 #include <core/intersection.h>
+#include <core/visibility_tester.h>
+#include <core/shape_set.h>
+#include <core/distribution1D.h>
+
 
 #include <cameras/orthographic.h>
 #include <cameras/perspective.h>
@@ -156,6 +174,7 @@ inline float GetRandom()
 #include <shapes/trianglemesh.h>
 #include <film/image.h>
 #include <accelerator/dummy_accelerator.h>
+#include <accelerator/bvh.h>
 #include <renderer/sampler.h>
 
 #include <integrators/direct_lighting.h>

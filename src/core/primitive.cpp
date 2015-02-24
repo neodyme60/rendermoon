@@ -10,15 +10,15 @@ Spectrum Primitive::L(Intersection& i, Point& light_point, Normal& light_nornal)
 }
 
 
-void Primitive::Refine(list<Reference<Primitive> > &refined) const
+void Primitive::Refine(vector<Reference<Primitive> > &refined) const
 {
  //   Severe("Unimplemented Primitive::Refine() method called!");
 }
 
 
-void Primitive::FullyRefine(list<Reference<Primitive> > &refined) const
+void Primitive::FullyRefine(vector<Reference<Primitive> > &refined) const
 {
-    list<Reference<Primitive> > todo;
+    vector<Reference<Primitive> > todo;
     todo.push_back(const_cast<Primitive *>(this));
     while (todo.size())
     {

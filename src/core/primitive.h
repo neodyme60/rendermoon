@@ -23,12 +23,12 @@ public:
 	Primitive();
     virtual ~Primitive(){}
 
+    virtual BBox WorldBound() const = 0;
     virtual bool GetIntersection(const Ray &r, Intersection&)  const = 0;
     virtual bool IsIntersected(const Ray &r) const = 0;
     virtual bool CanIntersect() const;
-	virtual void GetRandomSample(Normal& n, Point& p) const {}
-    virtual void Refine(list<Reference<Primitive> > &refined) const;
-    void FullyRefine(list<Reference<Primitive> > &refined) const;
+    virtual void Refine(vector<Reference<Primitive> > &refined) const;
+    void FullyRefine(vector<Reference<Primitive> > &refined) const;
     virtual const AreaLight *GetAreaLight() const = 0;
 
 	virtual Spectrum L(Intersection& i, Point& light_point, Normal& light_nornal);

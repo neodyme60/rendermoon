@@ -12,7 +12,7 @@ class DifferentialGeometry;
 class Shape : public ReferenceCounted
 {
 public:
-    Shape(const Transform *o2w, const Transform *w2o);
+    Shape(const Transform *o2w, const Transform *w2o, bool ro);
     virtual ~Shape();
 
     virtual BBox ObjectBound() const = 0;
@@ -34,6 +34,7 @@ public:
 
     // Shape Public Data
     const Transform *m_ObjectToWorld, *m_WorldToObject;
+    const bool m_ReverseOrientation;
 };
 
 #endif

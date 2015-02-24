@@ -1,6 +1,6 @@
 #include <rendermoon.h>
 
-Sphere::Sphere(Transform* o2w, Transform* w2o, float radius) : Shape(o2w, w2o) 
+Sphere::Sphere(Transform* o2w, Transform* w2o, bool ro, float radius) : Shape(o2w, w2o, ro)
 {
 	m_radius = radius;
 }
@@ -19,37 +19,13 @@ Point Sphere::SampleUniform(float u1, float u2, Normal *n) const
 {
     Point p = Point(0,0,0) + m_radius * UniformSampleSphere(u1, u2);
     *n = Normalize(m_ObjectToWorld->TransformNormal(Normal(p.x, p.y, p.z)));
-//    if (ReverseOrientation) *ns *= -1.f;
+    if (m_ReverseOrientation)
+        *n *= -1.f;
     return m_ObjectToWorld->TransformPoint(p);
 }
 
 Point Sphere::SampleBySolidAngle(const Point &p, float u1, float u2, Normal *n) const
 {
-    /*
-    // Compute coordinate system for sphere sampling
-    Point Pcenter = m_ObjectToWorld->TransformPoint(Point(0,0,0));
-    Vec3 wc = Normalize(Pcenter - p);
-        return ps; wcX, wcY;
-    CoordinateSystem(wc, &wcX, &wcY);
-
-    // Sample uniformly on sphere if $\pt{}$ is inside it
-//    if (DistanceSquared(p, Pcenter) - m_radius*m_radius < 1e-4f)
-//        return Sample(u1, u2, n);
-
-    // Sample sphere uniformly inside subtended cone
-    float sinThetaMax2 = m_radius*m_radius / DistanceSquared(p, Pcenter);
-    float cosThetaMax = sqrtf(max(0.0f, 1.0f - sinThetaMax2));
-    DifferentialGeometry dgSphere;
-    float thit, rayEpsilon;
-    Point ps;
-    Ray r(p, UniformSampleCone(u1, u2, cosThetaMax, wcX, wcY, wc), 1e-3f);
-    if (!GetIntersection(r, &thit, dgSphere))
-        thit = Dot(Pcenter - p, Normalize(r.m_direction));
-    ps = r.GetAt(thit);
-    *n = Normal(Normalize(ps - Pcenter));
-//    if (ReverseOrientation) *ns *= -1.f;
-    return ps;
-    */
     // Compute coordinate system for sphere sampling
     Point Pcenter = m_ObjectToWorld->TransformPoint(Point(0,0,0));
     Vec3 wc = Normalize(Pcenter - p);
@@ -58,23 +34,26 @@ Point Sphere::SampleBySolidAngle(const Point &p, float u1, float u2, Normal *n) 
 
     // Sample sphere uniformly inside subtended cone
     float sinThetaMax2 = m_radius*m_radius / DistanceSquared(p, Pcenter);
-    float cosThetaMax = sqrtf(max(0.f, 1.f - sinThetaMax2));
+    float cosThetaMax = sqrtf(max(0.0f, 1.0f - sinThetaMax2));
     DifferentialGeometry dgSphere;
-    float thit, rayEpsilon;
+    float thit;
     Point ps;
     Ray r(p, UniformSampleCone(u1, u2, cosThetaMax, wcX, wcY, wc), 1e-3f);
     if (!GetIntersection(r, &thit, dgSphere))
         thit = Dot(Pcenter - p, Normalize(r.m_direction));
     ps = r.GetAt(thit);
     *n = Normal(Normalize(ps - Pcenter));
-  //  if (ReverseOrientation) *ns *= -1.f;
+    if (m_ReverseOrientation)
+        *n *= -1.f;
     return ps;
 }
 
 BBox Sphere::ObjectBound() const
 {
-	return BBox();
+    return BBox(Point(-m_radius, -m_radius, -m_radius), Point( m_radius,  m_radius, m_radius));
 }
+
+
 /*
 void Sphere::GetRandomSample(Normal& n, Point& p) const
 {

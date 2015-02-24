@@ -7,17 +7,19 @@
 
 #include <core/aggregate.h>
 
+using namespace std;
+
 class DummyAccelerator : public Aggregate
 {
 protected:
-    std::list<Reference<Primitive>>   m_data;
+    vector<Reference<Primitive>>    m_data;
+    BBox                            m_worldBound;
 
 public:
-	DummyAccelerator(std::list<Reference<Primitive>>& data)
-    {
-        m_data = data;
-    }
+	DummyAccelerator(vector<Reference<Primitive>>& data);
     virtual ~DummyAccelerator() {}
+
+    virtual BBox WorldBound() const;
 
     BSDF *GetBSDF(const DifferentialGeometry &dg, const Transform &) const;
     const AreaLight *GetAreaLight() const;

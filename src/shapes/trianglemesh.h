@@ -11,7 +11,6 @@ using std::map;
 class TriangleMesh : public Shape
 {
 public:
-    // TriangleMesh Public Methods
     TriangleMesh(const Transform *o2w, const Transform *w2o, bool ro, int ntris, int nverts, const int *vptr, const Point *P, const Normal *N, const Vec3 *S, const float *uv);
     ~TriangleMesh();
     BBox ObjectBound() const;
@@ -21,6 +20,7 @@ public:
     void Refine(vector<Reference<Shape> > &refined) const;
     friend class Triangle;
 protected:
+
     int ntris, nverts;
     int *vertexIndex;
     Point *p;
@@ -33,7 +33,7 @@ protected:
 class Triangle : public Shape
 {
 public:
-    Triangle(const Transform *o2w, const Transform *w2o, TriangleMesh *m, int n);
+    Triangle(const Transform *o2w, const Transform *w2o, bool ro, TriangleMesh *m, int n);
     BBox ObjectBound() const;
     BBox WorldBound() const;
     bool GetIntersection(const Ray &ray, float *tHit, DifferentialGeometry& dg) const;

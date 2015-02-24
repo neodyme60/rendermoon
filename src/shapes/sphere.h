@@ -13,7 +13,7 @@ class Sphere : public Shape
 {
 public:
 
-    Sphere(Transform* o2w, Transform* w2o, float rad);
+    Sphere(Transform* o2w, Transform* w2o, bool ro, float rad);
 
 	BBox ObjectBound() const;
 
