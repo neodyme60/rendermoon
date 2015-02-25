@@ -39,7 +39,7 @@ public:
     bool GetIntersection(const Ray &ray, float *tHit, DifferentialGeometry& dg) const;
     bool IsIntersected(const Ray &ray) const;
     float Area() const;
-    Point SampleUniform(float u1, float u2, Normal *Ns) const;
+    Point SamplingUniformlyByRespectToArea(float u1, float u2, Normal *Ns) const;
 private:
     Reference<TriangleMesh> m_Mesh;
     int *v;

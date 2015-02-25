@@ -37,24 +37,23 @@ float Shape::Area() const
     return 0.0f;
 }
 
+Point Shape::SamplingUniformlyByRespectToArea(float u1, float u2, Normal *Ns) const
+{
+    return Point();
+}
+
 float Shape::Pdf(const Point &Pshape) const
 {
     return 1.0f / Area();
 }
 
-Point Shape::SampleUniform(float u1, float u2, Normal *Ns) const
+Point Shape::SamplingByRespectToSolidAngle(const Point &P, float u1, float u2, Normal *Ns) const
 {
-    return Point();
-}
-
-Point Shape::SampleBySolidAngle(const Point &P, float u1, float u2, Normal *Ns) const
-{
-    return SampleUniform(u1, u2, Ns);
+    return SamplingUniformlyByRespectToArea(u1, u2, Ns);
 }
 
 float Shape::Pdf(const Point &p, const Vec3 &wi) const
 {
-    // Intersect sample ray with area light geometry
     DifferentialGeometry dgLight;
     Ray ray(p, wi, 1e-3f);
     float thit;

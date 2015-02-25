@@ -26,11 +26,13 @@ public:
 
     virtual float Area() const;
 
-    virtual float Pdf(const Point &p, const Vec3 &wi) const;
+    //sampling uniformy by repect to area
+    virtual Point SamplingUniformlyByRespectToArea(float u1, float u2, Normal *) const;
     virtual float Pdf(const Point &Pshape) const;
 
-    virtual Point SampleUniform(float u1, float u2, Normal*) const;
-    virtual Point SampleBySolidAngle(const Point &P, float u1, float u2, Normal*) const;
+    //sampling by respect to solid angle
+    virtual Point SamplingByRespectToSolidAngle(const Point &P, float u1, float u2, Normal *) const;
+    virtual float Pdf(const Point &p, const Vec3 &wi) const;
 
     // Shape Public Data
     const Transform *m_ObjectToWorld, *m_WorldToObject;

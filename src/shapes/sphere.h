@@ -23,8 +23,8 @@ public:
 
     virtual float Area() const;
 
-    virtual Point SampleUniform(float u1, float u2, Normal *Ns) const;
-    virtual Point SampleBySolidAngle(const Point &P, float u1, float u2, Normal *Ns) const;
+    virtual Point SamplingUniformlyByRespectToArea(float u1, float u2, Normal *Ns) const;
+    virtual Point SamplingByRespectToSolidAngle(const Point &P, float u1, float u2, Normal *Ns) const;
 
     virtual float Pdf(const Point &p, const Vec3 &wi) const;
 

@@ -15,7 +15,7 @@ bool Sphere::CanIntersect() const
 	return true;
 }
 
-Point Sphere::SampleUniform(float u1, float u2, Normal *n) const
+Point Sphere::SamplingUniformlyByRespectToArea(float u1, float u2, Normal *n) const
 {
     Point p = Point(0,0,0) + m_radius * UniformSampleSphere(u1, u2);
     *n = Normalize(m_ObjectToWorld->TransformNormal(Normal(p.x, p.y, p.z)));
@@ -24,7 +24,7 @@ Point Sphere::SampleUniform(float u1, float u2, Normal *n) const
     return m_ObjectToWorld->TransformPoint(p);
 }
 
-Point Sphere::SampleBySolidAngle(const Point &p, float u1, float u2, Normal *n) const
+Point Sphere::SamplingByRespectToSolidAngle(const Point &p, float u1, float u2, Normal *n) const
 {
     // Compute coordinate system for sphere sampling
     Point Pcenter = m_ObjectToWorld->TransformPoint(Point(0,0,0));
@@ -147,7 +147,6 @@ float Sphere::Pdf(const Point &p, const Vec3 &wi) const
 //        return Shape::Pdf(p, wi);
 
     // Compute general sphere weight
-    float sinThetaMax2 = m_radius*m_radius / DistanceSquared(p, Pcenter);
-    float cosThetaMax = sqrtf(max(0.0f, 1.0f - sinThetaMax2));
+    float cosThetaMax = sqrtf(max(0.0f, 1.0f - (m_radius*m_radius / DistanceSquared(p, Pcenter))));
     return UniformConePdf(cosThetaMax);
 }

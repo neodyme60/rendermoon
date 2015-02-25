@@ -14,7 +14,7 @@ DiffuseAreaLight::~DiffuseAreaLight()
 
 float DiffuseAreaLight::Pdf(const Point &p, const Vec3 &wi) const
 {
-    return 0;
+    return m_ShapeSet->Pdf(p, wi);
 }
 
 Spectrum DiffuseAreaLight::L(const Point &p, const Normal &n, Vec3 const &w) const
@@ -27,7 +27,7 @@ Spectrum DiffuseAreaLight::Sample_L(const Point &p, float pEpsilon, float time, 
     Normal n;
     Point ps = m_ShapeSet->Sample(p, GetRandom(), GetRandom(), &n);
     *wi = Normalize(ps - p);
-    *pdf = m_ShapeSet->Pdf(p, *wi);
+    *pdf = this->Pdf(p, *wi);
     visibility.SetSegment(p, pEpsilon, ps, 1e-3f, time);
     Spectrum Ls = L(ps, n, -*wi);
     return Ls;

@@ -37,7 +37,7 @@ ShapeSet::~ShapeSet()
 Point ShapeSet::Sample(const Point &p, float u1, float u2, Normal *Ns) const
 {
     int sn = areaDistribution->SampleDiscrete(GetRandom(), 0);
-	Point pt = shapes[sn]->SampleBySolidAngle(p, u1, u2, Ns);
+	Point pt = shapes[sn]->SamplingByRespectToSolidAngle(p, u1, u2, Ns);
 
     Ray r(p, pt-p, 1e-3f, INFINITY);
     float thit = 1.f;
@@ -53,13 +53,13 @@ Point ShapeSet::Sample(const Point &p, float u1, float u2, Normal *Ns) const
 Point ShapeSet::Sample(Normal *Ns, float u1, float u2) const
 {
     int sn = areaDistribution->SampleDiscrete(GetRandom(), NULL);
-    return shapes[sn]->SampleUniform(u1, u2, Ns);
+    return shapes[sn]->SamplingUniformlyByRespectToArea(u1, u2, Ns);
 }
 
 
 float ShapeSet::Pdf(const Point &p, const Vec3 &wi) const
 {
-    float pdf = 0.f;
+    float pdf = 0.0f;
     for (uint32_t i = 0; i < shapes.size(); ++i)
         pdf += areas[i] * shapes[i]->Pdf(p, wi);
     return pdf / sumArea;

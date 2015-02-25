@@ -181,7 +181,7 @@ float Triangle::Area() const
     return 0.5f * Cross(p2-p1, p3-p1).Length();
 }
 
-Point Triangle::SampleUniform(float u1, float u2, Normal *Ns) const
+Point Triangle::SamplingUniformlyByRespectToArea(float u1, float u2, Normal *Ns) const
 {
     float b1, b2;
     UniformSampleTriangle(u1, u2, &b1, &b2);
