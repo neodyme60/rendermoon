@@ -68,6 +68,7 @@ set(SOURCE_FILES
 
                 src/lights/directional.cpp
                 src/lights/point.cpp
+                src/lights/infinite_area.cpp
 
                 src/cameras/perspective.cpp
                 src/cameras/orthographic.cpp

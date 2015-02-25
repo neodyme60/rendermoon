@@ -169,9 +169,12 @@ inline float GetRandom()
 
 #include <cameras/orthographic.h>
 #include <cameras/perspective.h>
+
 #include <lights/diffuse_area.h>
 #include <lights/point.h>
 #include <lights/directional.h>
+#include <lights/infinite_area.h>
+
 #include <shapes/sphere.h>
 #include <shapes/trianglemesh.h>
 #include <film/image.h>
