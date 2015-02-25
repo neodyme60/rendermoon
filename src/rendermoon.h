@@ -99,6 +99,7 @@ typedef unsigned __int64 uint64_t;
 #include <functional>
 #include <string.h> //memcpy
 #include <stdlib.h> //realloc
+#include <malloc.h> //realloc
 #include <stdio.h> //file open..
 
 //#define rm_infintiy numeric_limits<float>::infinity( )
@@ -163,6 +164,7 @@ inline float GetRandom()
 #include <core/intersection.h>
 #include <core/visibility_tester.h>
 #include <core/shape_set.h>
+
 #include <core/distribution1d.h>
 #include <core/distribution2d.h>
 #include <core/texture.h>

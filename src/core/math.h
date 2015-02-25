@@ -17,6 +17,8 @@
 #define INFINITY FLT_MAX
 #endif
 
+
+#include<math.h>
 class Point;
 class Normal;
 

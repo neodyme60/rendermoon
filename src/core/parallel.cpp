@@ -137,9 +137,11 @@ RWMutex::~RWMutex() {
 
 
 RWMutexLock::RWMutexLock(RWMutex &m, RWMutexLockType t) : type(t), mutex(m) {
+/*
     int err;
     if (t == READ) err = pthread_rwlock_rdlock(&m.mutex);
     else           err = pthread_rwlock_wrlock(&m.mutex);
+*/
 }
 
 
@@ -464,9 +466,10 @@ Semaphore::Semaphore() {
     if (err == -1)
         Severe("Error from sem_init: %s", strerror(err));
 #else
+
     char name[32];
     sprintf(name, "pbrt.%d-%d", (int)getpid(), count++);
-    sem = sem_open(name, O_CREAT, S_IRUSR|S_IWUSR, 0);
+   // sem = sem_open(name, O_CREAT, S_IRUSR|S_IWUSR, 0);
     /*
     if (!sem)
         Severe("Error from sem_open: %s", strerror(errno));
@@ -527,7 +530,8 @@ void Semaphore::Wait() {
 #endif // !PBRT_IS_WINDOWS
 #if !defined(PBRT_IS_WINDOWS)
 bool Semaphore::TryWait() {
-    return (sem_trywait(sem) == 0);
+ //   return (sem_trywait(sem) == 0);
+    return 0;
 }
 
 

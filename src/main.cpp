@@ -964,7 +964,7 @@ void monkey_mesh_light(int samples, std::string filename, int width, int height,
 	ObjMeshLoader obj_loader;
 
 	//floor
-	obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_floor.obj");
+	obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_floor.obj");
 	Reference<Shape> floor = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -982,7 +982,7 @@ void monkey_mesh_light(int samples, std::string filename, int width, int height,
 
 
 	//ceiling
-	obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_ceiling.obj");
+	obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_ceiling.obj");
 	Reference<Shape> ceiling = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1000,7 +1000,7 @@ void monkey_mesh_light(int samples, std::string filename, int width, int height,
 
 
 	//back
-	obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_back.obj");
+	obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_back.obj");
 	Reference<Shape> back = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1017,7 +1017,7 @@ void monkey_mesh_light(int samples, std::string filename, int width, int height,
 	}
 
 	//greenwall
-	obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_greenwall.obj");
+	obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_greenwall.obj");
 	Reference<Shape> greenwall = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1034,7 +1034,7 @@ void monkey_mesh_light(int samples, std::string filename, int width, int height,
 	}
 
 	//redwall
-	obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_redwall.obj");
+	obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_redwall.obj");
 	Reference<Shape> redwall = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1067,8 +1067,8 @@ void monkey_mesh_light(int samples, std::string filename, int width, int height,
 	//monkey
 	Transform s2a = Transform::CreateTranslate(278.0, 200.0, 400.5)*Transform::CreateScale(20.0f, 20.0f, 20.0f)*Transform::CreateRotate_y(180.0f);
 	Transform s2b = s2a.GetInverse();
-	obj_loader.Parse("scenes\\obj\\blender_monkey.obj");
-	//obj_loader.Parse("scenes\\obj\\cube.obj");
+	obj_loader.Parse("scenes/obj/blender_monkey.obj");
+	//obj_loader.Parse("scenes/obj/cube.obj");
 	Reference<Shape> monkey = Reference<Shape>(new TriangleMesh(&s2a, &s2b, true, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1098,7 +1098,7 @@ void monkey_mesh_light(int samples, std::string filename, int width, int height,
 	*/
 	Transform t9a = Transform::CreateTranslate(278.0, 200.0, 270)*Transform::CreateScale(30.0f, 30.0f, 30.0f)*Transform::CreateRotate_y(180.0f);
 	Transform t9b = t9a.GetInverse();
-	obj_loader.Parse("scenes\\obj\\blender_monkey.obj");
+	obj_loader.Parse("scenes/obj/blender_monkey.obj");
 	Reference<Shape> s9 = Reference<Shape>(new TriangleMesh(&t9a, &t9b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1119,7 +1119,6 @@ void monkey_mesh_light(int samples, std::string filename, int width, int height,
 	primitives.push_back(g9);
 
 	//Accelerator
-	
 	primitives.push_back(g1);
 	primitives.push_back(g2);
 	primitives.push_back(g3);
@@ -1187,7 +1186,7 @@ void jensen_cbox(int samples, std::string filename, int width, int height, Direc
 	ObjMeshLoader obj_loader;
 
 	//floor
-	obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_floor.obj");
+	obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_floor.obj");
 	Reference<Shape> floor = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1205,7 +1204,7 @@ void jensen_cbox(int samples, std::string filename, int width, int height, Direc
 
 
 	//ceiling
-	obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_ceiling.obj");
+	obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_ceiling.obj");
 	Reference<Shape> ceiling = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1223,7 +1222,7 @@ void jensen_cbox(int samples, std::string filename, int width, int height, Direc
 
 
 	//back
-	obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_back.obj");
+	obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_back.obj");
 	Reference<Shape> back = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1240,7 +1239,7 @@ void jensen_cbox(int samples, std::string filename, int width, int height, Direc
 	}
 
 	//greenwall
-	obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_greenwall.obj");
+	obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_greenwall.obj");
 	Reference<Shape> greenwall = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1257,7 +1256,7 @@ void jensen_cbox(int samples, std::string filename, int width, int height, Direc
 	}
 
 	//redwall
-	obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_redwall.obj");
+	obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_redwall.obj");
 	Reference<Shape> redwall = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1386,7 +1385,7 @@ void mitsuba_cbox(int samples, std::string filename, int width, int height, Dire
     ObjMeshLoader obj_loader;
 
     //floor
-    obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_floor.obj");
+    obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_floor.obj");
     Reference<Shape> floor = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
             obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0]:0,
             obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1404,7 +1403,7 @@ void mitsuba_cbox(int samples, std::string filename, int width, int height, Dire
 
 
     //ceiling
-    obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_ceiling.obj");
+    obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_ceiling.obj");
     Reference<Shape> ceiling = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size()/3, (int)obj_loader.m_Points.size(),
             obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
             obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1422,7 +1421,7 @@ void mitsuba_cbox(int samples, std::string filename, int width, int height, Dire
 
 
     //back
-    obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_back.obj");
+    obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_back.obj");
     Reference<Shape> back = Reference<Shape> (new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size()/3, (int)obj_loader.m_Points.size(),
             obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
             obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1439,7 +1438,7 @@ void mitsuba_cbox(int samples, std::string filename, int width, int height, Dire
     }
 
     //greenwall
-    obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_greenwall.obj");
+    obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_greenwall.obj");
     Reference<Shape> greenwall = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size()/3, (int)obj_loader.m_Points.size(),
             obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
             obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1456,7 +1455,7 @@ void mitsuba_cbox(int samples, std::string filename, int width, int height, Dire
     }
 
     //redwall
-    obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_redwall.obj");
+    obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_redwall.obj");
     Reference<Shape> redwall = Reference<Shape> (new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size()/3, (int)obj_loader.m_Points.size(),
             obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
             obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1473,7 +1472,7 @@ void mitsuba_cbox(int samples, std::string filename, int width, int height, Dire
     }
 
     //largebox
-    obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_largebox.obj");
+    obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_largebox.obj");
     Reference<Shape> largebox = Reference<Shape> (new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
             obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
             obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1490,7 +1489,7 @@ void mitsuba_cbox(int samples, std::string filename, int width, int height, Dire
     }
 
     //smallbox
-    obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_smallbox.obj");
+    obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_smallbox.obj");
     Reference<Shape> smallbox = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
             obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
             obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1520,7 +1519,7 @@ void mitsuba_cbox(int samples, std::string filename, int width, int height, Dire
     DiffuseAreaLight * al = new DiffuseAreaLight(t9a, a1l, 1, s9);
     GeometricPrimitive* g9 = new GeometricPrimitive(s9, m9, al);
 	/*
-	obj_loader.Parse("scenes\\mitsuba_cornallbox\\meshes\\cbox_luminaire.obj");
+	obj_loader.Parse("scenes/mitsuba_cornallbox/meshes/cbox_luminaire.obj");
 	Reference<Shape> s9 = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1611,7 +1610,7 @@ void mitsuba_veach_mis(int samples, std::string filename, int width, int height,
     ObjMeshLoader obj_loader;
 
     //floor
-    obj_loader.Parse("scenes\\mitsuba_veach_mis\\floor.obj");
+    obj_loader.Parse("scenes/mitsuba_veach_mis/floor.obj");
     Reference<Shape> floor = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
             obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0]:0,
             obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1628,7 +1627,7 @@ void mitsuba_veach_mis(int samples, std::string filename, int width, int height,
     }
 
     //plate1
-    obj_loader.Parse("scenes\\mitsuba_veach_mis\\plate1.obj");
+    obj_loader.Parse("scenes/mitsuba_veach_mis/plate1.obj");
     Reference<Shape> plate1 = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size()/3, (int)obj_loader.m_Points.size(),
             obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
             obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1646,7 +1645,7 @@ void mitsuba_veach_mis(int samples, std::string filename, int width, int height,
 
 
     //plate2
-    obj_loader.Parse("scenes\\mitsuba_veach_mis\\plate2.obj");
+    obj_loader.Parse("scenes/mitsuba_veach_mis/plate2.obj");
     Reference<Shape> plate2 = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size()/3, (int)obj_loader.m_Points.size(),
             obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
             obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1664,7 +1663,7 @@ void mitsuba_veach_mis(int samples, std::string filename, int width, int height,
 
 
     //plate3
-    obj_loader.Parse("scenes\\mitsuba_veach_mis\\plate3.obj");
+    obj_loader.Parse("scenes/mitsuba_veach_mis/plate3.obj");
     Reference<Shape> plate3 = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size()/3, (int)obj_loader.m_Points.size(),
             obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
             obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1682,7 +1681,7 @@ void mitsuba_veach_mis(int samples, std::string filename, int width, int height,
 
 
     //plate4  front
-    obj_loader.Parse("scenes\\mitsuba_veach_mis\\plate4.obj");
+    obj_loader.Parse("scenes/mitsuba_veach_mis/plate4.obj");
     Reference<Shape> plate4 = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size()/3, (int)obj_loader.m_Points.size(),
             obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
             obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1815,7 +1814,7 @@ void javascript_cbox(int samples, std::string filename, int width, int height, D
 	ObjMeshLoader obj_loader;
 
 	//floor
-	obj_loader.Parse("scenes\\javascript_cbox\\meshes\\cbox_floor.obj");
+	obj_loader.Parse("scenes/javascript_cbox/meshes/cbox_floor.obj");
 	Reference<Shape> floor = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1833,7 +1832,7 @@ void javascript_cbox(int samples, std::string filename, int width, int height, D
 
 
 	//ceiling
-	obj_loader.Parse("scenes\\javascript_cbox\\meshes\\cbox_ceiling.obj");
+	obj_loader.Parse("scenes/javascript_cbox/meshes/cbox_ceiling.obj");
 	Reference<Shape> ceiling = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1851,7 +1850,7 @@ void javascript_cbox(int samples, std::string filename, int width, int height, D
 
 
 	//back
-	obj_loader.Parse("scenes\\javascript_cbox\\meshes\\cbox_back.obj");
+	obj_loader.Parse("scenes/javascript_cbox/meshes/cbox_back.obj");
 	Reference<Shape> back = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1868,7 +1867,7 @@ void javascript_cbox(int samples, std::string filename, int width, int height, D
 	}
 
 	//blue
-	obj_loader.Parse("scenes\\javascript_cbox\\meshes\\cbox_greenwall.obj");
+	obj_loader.Parse("scenes/javascript_cbox/meshes/cbox_greenwall.obj");
 	Reference<Shape> greenwall = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1885,7 +1884,7 @@ void javascript_cbox(int samples, std::string filename, int width, int height, D
 	}
 
 	//redwall
-	obj_loader.Parse("scenes\\javascript_cbox\\meshes\\cbox_redwall.obj");
+	obj_loader.Parse("scenes/javascript_cbox/meshes/cbox_redwall.obj");
 	Reference<Shape> redwall = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
