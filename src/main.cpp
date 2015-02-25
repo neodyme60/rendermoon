@@ -950,7 +950,7 @@ void tp1_5(int samples, std::string filename, int width, int height)
 }
 
 
-void monkey_mesh_light(int samples, std::string filename, int width, int height, DirectLightingStrategy dls)
+void monkey_mesh_light(int samples, std::string filename, int width, int height, DirectLightingStrategy dls, int light_samples)
 {
 	//primitives list
 	vector<Reference<Primitive>> primitives;
@@ -1063,10 +1063,12 @@ void monkey_mesh_light(int samples, std::string filename, int width, int height,
 		g6 = new DummyAccelerator(refinedPrimitives);
 	}
 	*/
+	/*
 	//monkey
-	Transform s2a = Transform::CreateTranslate(278.0, 100.0, 270.5)*Transform::CreateScale(20.0f, 20.0f, 20.0f);
+	Transform s2a = Transform::CreateTranslate(278.0, 200.0, 400.5)*Transform::CreateScale(20.0f, 20.0f, 20.0f)*Transform::CreateRotate_y(180.0f);
 	Transform s2b = s2a.GetInverse();
 	obj_loader.Parse("scenes\\obj\\blender_monkey.obj");
+	//obj_loader.Parse("scenes\\obj\\cube.obj");
 	Reference<Shape> monkey = Reference<Shape>(new TriangleMesh(&s2a, &s2b, true, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1081,7 +1083,7 @@ void monkey_mesh_light(int samples, std::string filename, int width, int height,
 		g7->FullyRefine(refinedPrimitives);
 		g7 = new DummyAccelerator(refinedPrimitives);
 	}
-	
+	*/
 
 	//light
 	/*
@@ -1089,39 +1091,44 @@ void monkey_mesh_light(int samples, std::string filename, int width, int height,
 	Transform t9b = t9a.GetInverse();
 	Reference<Shape> s9 = Reference<Shape>(new Sphere(&t9a, &t9b, 400.0f));
 	*/
-	
+	/*
 	Transform t9a = Transform::CreateTranslate(278.0, 400.0, 270.5);
 	Transform t9b = t9a.GetInverse();
 	Reference<Shape> s9 = Reference<Shape>(new Sphere(&t9a, &t9b, false, 50.0f));
-	/*
-	Transform t9a = Transform::CreateTranslate(278.0, 100.0, 270.5);
+	*/
+	Transform t9a = Transform::CreateTranslate(278.0, 200.0, 270)*Transform::CreateScale(30.0f, 30.0f, 30.0f)*Transform::CreateRotate_y(180.0f);
 	Transform t9b = t9a.GetInverse();
 	obj_loader.Parse("scenes\\obj\\blender_monkey.obj");
-	Reference<Shape> s9 = Reference<Shape>(new TriangleMesh(&t1a, &t1b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
+	Reference<Shape> s9 = Reference<Shape>(new TriangleMesh(&t9a, &t9b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
 		obj_loader.m_Normals.size()>0 ? &obj_loader.m_Normals[0] : NULL,
 		0,
-		obj_loader.m_uvs.size()>0 ? &obj_loader.m_uvs[0] : NULL));*/
+		obj_loader.m_uvs.size()>0 ? &obj_loader.m_uvs[0] : NULL));
 	Material *m9 = new DiffuseMaterial(Spectrum(0.0));
 	Spectrum a1l = Spectrum(12.0);
-	DiffuseAreaLight * al = new DiffuseAreaLight(t9a, a1l, 1, s9);
-	GeometricPrimitive* g9 = new GeometricPrimitive(s9, m9, al);
+	DiffuseAreaLight * al = new DiffuseAreaLight(t9a, a1l, light_samples, s9);
+	Primitive* g9 = new GeometricPrimitive(s9, m9, al);
 	lights.push_back(al);
+	if (!g9->CanIntersect())
+	{
+		vector<Reference<Primitive> > refinedPrimitives;
+		g9->FullyRefine(refinedPrimitives);
+		g9 = new DummyAccelerator(refinedPrimitives);
+	}
 	primitives.push_back(g9);
 
 	//Accelerator
-	/*
+	
 	primitives.push_back(g1);
 	primitives.push_back(g2);
 	primitives.push_back(g3);
 	primitives.push_back(g4);
 	primitives.push_back(g5);
-	*/
 	//	primitives.push_back(g6);
-	primitives.push_back(g7);
+//	primitives.push_back(g7);
 
-	Primitive *accelerator = new DummyAccelerator(primitives);// new BVHAccel(primitives);
+	Primitive *accelerator = new BVHAccel(primitives);
 
 	//create film
 	Film * film = new Image(width, height, filename);
@@ -2014,7 +2021,7 @@ int main()
 
 //	javascript_cbox(50, "pathtracing.tga", 512, 384, DIRECT_LIGHTING_MIS);
 
-	monkey_mesh_light(1, "monkey.tga", 512/4, 384/4, DIRECT_LIGHTING_LIGHT_ONLY);
+	monkey_mesh_light(30, "monkey.tga", 512 / 4, 384 / 4, DIRECT_LIGHTING_LIGHT_ONLY, 1);
 
 
 //	jensen_cbox(1, "jensen_l.tga", 512, 384, DIRECT_LIGHTING_LIGHT_ONLY);

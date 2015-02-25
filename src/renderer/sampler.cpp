@@ -13,7 +13,6 @@ Spectrum Sampler::Li(const Scene *scene, const Ray& ray, Intersection &i)
 	{
 		if (scene->GetIntersection(ray, i))
 		{
-			return Spectrum(1.0f);
 			Li = m_surfaceIntegrator->Li(*scene, *this, ray, i);
 		}
 		else

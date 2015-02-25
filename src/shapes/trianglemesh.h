@@ -16,7 +16,7 @@ public:
     BBox ObjectBound() const;
     BBox WorldBound() const;
 
-    bool CanIntersect() const { return false; }
+    bool CanIntersect() const;
     void Refine(vector<Reference<Shape> > &refined) const;
     friend class Triangle;
 protected:

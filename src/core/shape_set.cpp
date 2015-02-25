@@ -17,15 +17,14 @@ ShapeSet::ShapeSet(const Reference<Shape> &s)
 //    if (shapes.size() > 64)
 //        Warning("Area light geometry turned into %d shapes; may be very inefficient.", (int)shapes.size());
 
-    // Compute total area of shapes in _ShapeSet_ and area CDF
-    sumArea = 0.f;
+    sumArea = 0.0f;
     for (uint32_t i = 0; i < shapes.size(); ++i)
     {
         float a = shapes[i]->Area();
         areas.push_back(a);
         sumArea += a;
     }
-    areaDistribution = new Distribution1D(&areas[0], areas.size());
+    areaDistribution = new Distribution1D(areas);
 }
 
 
@@ -37,8 +36,8 @@ ShapeSet::~ShapeSet()
 
 Point ShapeSet::Sample(const Point &p, float u1, float u2, Normal *Ns) const
 {
-    int sn = areaDistribution->SampleDiscrete(GetRandom(), NULL);
-    Point pt = shapes[sn]->SampleBySolidAngle(p, u1, u2, Ns);
+    int sn = areaDistribution->SampleDiscrete(GetRandom(), 0);
+	Point pt = shapes[sn]->SampleBySolidAngle(p, u1, u2, Ns);
 
     Ray r(p, pt-p, 1e-3f, INFINITY);
     float thit = 1.f;

@@ -38,6 +38,10 @@ TriangleMesh::TriangleMesh(const Transform *o2w, const Transform *w2o, bool ro, 
         p[i] = m_ObjectToWorld->TransformPoint(P[i]);
 }
 
+bool TriangleMesh::CanIntersect() const
+{
+    return false;
+}
 
 TriangleMesh::~TriangleMesh()
 {

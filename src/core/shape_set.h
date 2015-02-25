@@ -21,11 +21,11 @@ public:
     float Pdf(const Point &p, const Vec3 &wi) const;
     float Pdf(const Point &p) const;
 private:
-    // ShapeSet Private Data
-    vector<Reference<Shape> > shapes;
-    float sumArea;
-    vector<float> areas;
-    Distribution1D *areaDistribution;
+
+    vector<Reference<Shape> >	shapes;
+    float						sumArea;
+    vector<float>				areas;
+    Distribution1D				*areaDistribution;
 };
 
 #endif
