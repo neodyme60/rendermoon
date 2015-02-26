@@ -15,7 +15,7 @@ public:
     int     m_depth;
 public:
     Ray() : mint(0.f), maxt(INFINITY), m_time(0.f), m_depth(0) { }
-	Ray(Point o, Vec3 d, float start, float end = INFINITY, float t = 0.0f, int depth = 0) : m_origin(o), m_direction(d), mint(start), maxt(end), m_time(t), m_depth(depth) { }
+	Ray(Point o, Vec3 d, float start, float end = INFINITY, float t = 0.0f, int depth = 0) : m_origin(o), m_direction(Normalize(d)), mint(start), maxt(end), m_time(t), m_depth(depth) { }
 
     Point GetOrigin() const;
     Vec3 GetDirection() const;

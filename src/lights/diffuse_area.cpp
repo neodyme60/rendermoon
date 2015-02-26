@@ -19,7 +19,8 @@ float DiffuseAreaLight::Pdf(const Point &p, const Vec3 &wi) const
 
 Spectrum DiffuseAreaLight::L(const Point &p, const Normal &n, Vec3 const &w) const
 {
-    return Dot(n, w) > 0.f ? m_Lemit : 0.f;
+    float d = Dot(n, w);
+    return d > 0.0f ? m_Lemit : 0.0f;
 }
 
 Spectrum DiffuseAreaLight::Sample_L(const Point &p, float pEpsilon, float time, Vec3 *wi, float *pdf, VisibilityTester &visibility) const
@@ -28,6 +29,7 @@ Spectrum DiffuseAreaLight::Sample_L(const Point &p, float pEpsilon, float time, 
     Point ps = m_ShapeSet->Sample(p, GetRandom(), GetRandom(), &n);
     *wi = Normalize(ps - p);
     *pdf = this->Pdf(p, *wi);
+    //todo revert
     visibility.SetSegment(p, pEpsilon, ps, 1e-3f, time);
     Spectrum Ls = L(ps, n, -*wi);
     return Ls;

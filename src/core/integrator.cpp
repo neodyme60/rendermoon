@@ -68,7 +68,9 @@ Spectrum DirectLightingEstimateLightSampling(const Scene &scene, const Renderer 
 	Spectrum  f = bsdf->f(wo, wi);
 
     if (!f.IsBlack() && visibility.Unoccluded(scene))
-        L += f * Li * max(Dot(wi, n), 0.0f) / light_sample_pdf;
+        L += f* Li * max(Dot(wi, n), 0.0f) / light_sample_pdf;
+
+    //L  = Li* Spectrum(pow(Dot(wi, n), 12.0f));
 
     return L;
 }

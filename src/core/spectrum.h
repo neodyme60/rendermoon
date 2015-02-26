@@ -37,7 +37,7 @@ public:
             m_data[i]=value;
 	}
 
-    Spectrum(const Vec3 value) 	
+    Spectrum(const Vec3& value)
 	{
         m_data = std::vector<float>(3);
         m_data[0]=value.x;

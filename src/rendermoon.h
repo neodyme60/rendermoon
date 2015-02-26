@@ -111,10 +111,11 @@ inline float GetRandom()
 	float r;
 	do
 	{
-		g_seed = (214013*g_seed+25310011);
-		r = float((g_seed>>16)&0x7fff)/float(0x7fff);
-//		r = (float)rand() / RAND_MAX;
-	} while (r == 1.0f);
+//		g_seed = (214013*g_seed+25310011);
+//		r = float((g_seed>>16)&0x7fff)/float(0x7fff);
+		r = (float)rand() / RAND_MAX;
+	}
+    while (r == 1.0f);
 	return r;
 }
 

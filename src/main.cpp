@@ -1086,27 +1086,42 @@ void monkey_mesh_light(int samples, std::string filename, int width, int height,
 	*/
 
 	//light
-	/*
+    /*
 	Transform t9a = Transform::CreateTranslate(278.0, 920.0, 270.5);
 	Transform t9b = t9a.GetInverse();
-	Reference<Shape> s9 = Reference<Shape>(new Sphere(&t9a, &t9b, 400.0f));
-	*/
-	/*
+	Reference<Shape> s9 = Reference<Shape>(new Sphere(&t9a, &t9b, false, 400.0f));
+    */
+/*
 	Transform t9a = Transform::CreateTranslate(278.0, 400.0, 270.5);
 	Transform t9b = t9a.GetInverse();
-	Reference<Shape> s9 = Reference<Shape>(new Sphere(&t9a, &t9b, false, 50.0f));
-	*/
+	Reference<Shape> s9 = Reference<Shape>(new Sphere(&t9a, &t9b, false, 30.0f));
+*/
+/*
 	Transform t9a = Transform::CreateTranslate(278.0, 200.0, 270)*Transform::CreateScale(30.0f, 30.0f, 30.0f)*Transform::CreateRotate_y(180.0f);
 	Transform t9b = t9a.GetInverse();
-	obj_loader.Parse("scenes/obj/blender_monkey.obj");
+   obj_loader.Parse("scenes/obj/blender_monkey.obj");
+	*/
+//    Transform t9a = Transform::CreateTranslate(0.0f, -0.5f, 0.0f);
+//    Transform t9b = t9a.GetInverse();
+
+    Transform t9a = Transform::CreateTranslate(278.0, 400.0, 270.5)*Transform::CreateScale(30.0f, 30.0f, 30.0f);
+    Transform t9b = t9a.GetInverse();
+    obj_loader.Parse("scenes/obj/cube.obj");
+
+/*
+    Transform t9a = Transform::CreateTranslate(278.0, 400.0, 270.5)*Transform::CreateScale(30.0f, 30.0f, 30.0f);
+    Transform t9b = t9a.GetInverse();
+    obj_loader.Parse("scenes/obj/sphere.obj");
+*/
 	Reference<Shape> s9 = Reference<Shape>(new TriangleMesh(&t9a, &t9b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
 		obj_loader.m_Normals.size()>0 ? &obj_loader.m_Normals[0] : NULL,
 		0,
 		obj_loader.m_uvs.size()>0 ? &obj_loader.m_uvs[0] : NULL));
+
 	Material *m9 = new DiffuseMaterial(Spectrum(0.0));
-	Spectrum a1l = Spectrum(12.0);
+	Spectrum a1l = Spectrum(20.0);
 	DiffuseAreaLight * al = new DiffuseAreaLight(t9a, a1l, light_samples, s9);
 	Primitive* g9 = new GeometricPrimitive(s9, m9, al);
 	lights.push_back(al);
@@ -1119,11 +1134,11 @@ void monkey_mesh_light(int samples, std::string filename, int width, int height,
 	primitives.push_back(g9);
 
 	//Accelerator
-	primitives.push_back(g1);
-	primitives.push_back(g2);
-	primitives.push_back(g3);
+//	primitives.push_back(g1);
+//	primitives.push_back(g2);
+//	primitives.push_back(g3);
 	primitives.push_back(g4);
-	primitives.push_back(g5);
+//	primitives.push_back(g5);
 	//	primitives.push_back(g6);
 //	primitives.push_back(g7);
 
@@ -1783,7 +1798,7 @@ void mitsuba_veach_mis(int samples, std::string filename, int width, int height,
     float fov = 28.0f;
     PerspectiveCamera *camera = new PerspectiveCamera(cam2world, screenWindow, fov, film);
 
-    //integrator
+    //integratorDIRECT_LIGHTING_LIGHT_ONLY
     VolumeIntegrator* volume_integrator = nullPtr;
 //    SurfaceIntegrator* surface_integrator =  new AmbientOcclusion(10, 10.0f);
 	SurfaceIntegrator* surface_integrator = new DirectLighting(dls);
@@ -2020,12 +2035,12 @@ int main()
 
 //	javascript_cbox(50, "pathtracing.tga", 512, 384, DIRECT_LIGHTING_MIS);
 
-	monkey_mesh_light(30, "monkey.tga", 512 / 4, 384 / 4, DIRECT_LIGHTING_LIGHT_ONLY, 1);
+	monkey_mesh_light(350, "monkey.tga", 512 / 4, 384 / 4, DIRECT_LIGHTING_LIGHT_ONLY, 1);
 
 
-//	jensen_cbox(1, "jensen_l.tga", 512, 384, DIRECT_LIGHTING_LIGHT_ONLY);
-//	jensen_cbox(15, "jensen_b.tga", 512, 384, DIRECT_LIGHTING_BRDF_ONLY);
-//	jensen_cbox(15, "jensen_mis.tga", 512, 384, DIRECT_LIGHTING_MIS);
+//	jensen_cbox(250, "jensen_l.tga", 512, 384, DIRECT_LIGHTING_LIGHT_ONLY);
+//	jensen_cbox(250, "jensen_b.tga", 512, 384, DIRECT_LIGHTING_BRDF_ONLY);
+//	jensen_cbox(250, "jensen_mis.tga", 512, 384, DIRECT_LIGHTING_MIS);
 	/*
 	mitsuba_cbox(512, "mitsuba_l.tga", 512, 384, DIRECT_LIGHTING_LIGHT_ONLY);
 	mitsuba_cbox(512, "mitsuba_b.tga", 512, 384, DIRECT_LIGHTING_BRDF_ONLY);
