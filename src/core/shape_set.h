@@ -7,6 +7,7 @@
 
 #include <core/memory.h>
 class Shape;
+class DummyAccelerator;
 struct Distribution1D;
 
 class ShapeSet
@@ -26,6 +27,7 @@ private:
     float						sumArea;
     vector<float>				areas;
     Distribution1D				*areaDistribution;
+	Aggregate					*aggregate;
 };
 
 #endif

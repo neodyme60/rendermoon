@@ -92,6 +92,7 @@ typedef unsigned __int64 uint64_t;
 //#define isinf(f) (!_finite((f)))
 #endif
 
+#include <float.h>
 #include <iostream>
 #include <list>
 #include <limits>
@@ -107,6 +108,7 @@ typedef unsigned __int64 uint64_t;
 static unsigned int g_seed=98156273;
 
 inline float GetRandom()
+
 {
 	float r;
 	do

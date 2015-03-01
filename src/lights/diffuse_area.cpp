@@ -26,11 +26,14 @@ Spectrum DiffuseAreaLight::L(const Point &p, const Normal &n, Vec3 const &w) con
 Spectrum DiffuseAreaLight::Sample_L(const Point &p, float pEpsilon, float time, Vec3 *wi, float *pdf, VisibilityTester &visibility) const
 {
     Normal n;
-    Point ps = m_ShapeSet->Sample(p, GetRandom(), GetRandom(), &n);
+	float u1 = GetRandom();
+	float u2 = GetRandom();
+
+    Point ps = m_ShapeSet->Sample(p, u1, u2, &n);
     *wi = Normalize(ps - p);
     *pdf = this->Pdf(p, *wi);
-    //todo revert
-    visibility.SetSegment(p, pEpsilon, ps, 1e-3f, time);
+
+	visibility.SetSegment(p, pEpsilon, ps, 1e-3f, time);
     Spectrum Ls = L(ps, n, -*wi);
     return Ls;
 }

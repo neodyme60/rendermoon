@@ -37,6 +37,7 @@ public:
     // Shape Public Data
     const Transform *m_ObjectToWorld, *m_WorldToObject;
     const bool m_ReverseOrientation;
+	static int shape_id;
 };
 
 #endif

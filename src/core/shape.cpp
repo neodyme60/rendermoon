@@ -1,7 +1,10 @@
 #include <rendermoon.h>
 
+int Shape::shape_id = 0;
+
 Shape::Shape(const Transform *o2w, const Transform *w2o, bool ro) : m_ObjectToWorld(o2w), m_WorldToObject(w2o), m_ReverseOrientation(ro)
 {
+	shape_id++;
 }
 
 Shape::~Shape() 

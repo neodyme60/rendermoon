@@ -39,13 +39,26 @@ Point ShapeSet::Sample(const Point &p, float u1, float u2, Normal *Ns) const
     int sn = areaDistribution->SampleDiscrete(GetRandom(), 0);
 	Point pt = shapes[sn]->SamplingByRespectToSolidAngle(p, u1, u2, Ns);
 
-    Ray r(p, pt-p, 1e-3f, INFINITY);
-    float thit = 1.f;
+	Ray r(p, Normalize(pt-p), 1e-3f, INFINITY);
+	float thit = INFINITY;
     bool anyHit = false;
-    DifferentialGeometry dg;
-    for (uint32_t i = 0; i < shapes.size(); ++i)
-        anyHit |= shapes[i]->GetIntersection(r, &thit, dg);
-    if (anyHit) *Ns = dg.m_Normal;
+	DifferentialGeometry dg;
+	for (uint32_t i = 0; i < shapes.size(); ++i)
+	{
+		DifferentialGeometry dg_tmp;
+		float thit_tmp = INFINITY;
+		if (shapes[i]->GetIntersection(r, &thit_tmp, dg_tmp))
+		{
+			if (thit_tmp < thit)
+			{
+				thit = thit_tmp;
+				dg = dg_tmp;
+			}
+			anyHit = true;
+		}
+	}
+	if (anyHit)
+		*Ns = dg.m_Normal;
     return r.GetAt(thit);
 }
 

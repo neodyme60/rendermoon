@@ -47,7 +47,7 @@ Spectrum DirectLightingEstimateMIS(const Scene &scene, const Renderer &renderer,
 
         if (!Li.IsBlack())
         {
-            L += f * Li * AbsDot(wi, n) * weight / brdf_sample_pdf;
+            L += f * Li * max(Dot(wi, n), 0.0f) * weight / brdf_sample_pdf;
         }
     }
     return L;
@@ -63,15 +63,18 @@ Spectrum DirectLightingEstimateLightSampling(const Scene &scene, const Renderer 
 
     //get light emit by sample direction on light, pdf
     Spectrum Li = light->Sample_L(p, 0.1f, 0.0, &wi, &light_sample_pdf, visibility);
+	const Ray r;
 
-     //get brdf value
-	Spectrum  f = bsdf->f(wo, wi);
+	if (light_sample_pdf > 0. && !Li.IsBlack())
+	{
+		//get brdf value
+		Spectrum  f = bsdf->f(wo, wi);
+		if (!f.IsBlack() && visibility.Unoccluded(scene))
+		{
+			L += f* Li * max(Dot(wi, n), 0.0f) / light_sample_pdf;
 
-    if (!f.IsBlack() && visibility.Unoccluded(scene))
-        L += f* Li * max(Dot(wi, n), 0.0f) / light_sample_pdf;
-
-    //L  = Li* Spectrum(pow(Dot(wi, n), 12.0f));
-
+		}
+	}
     return L;
 }
 

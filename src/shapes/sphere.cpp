@@ -50,30 +50,10 @@ Point Sphere::SamplingByRespectToSolidAngle(const Point &p, float u1, float u2, 
 
 BBox Sphere::ObjectBound() const
 {
-    return BBox(Point(-m_radius, -m_radius, -m_radius), Point( m_radius,  m_radius, m_radius));
+    return BBox(Point(-m_radius, -m_radius, -m_radius), Point(m_radius, m_radius, m_radius));
 }
 
 
-/*
-void Sphere::GetRandomSample(Normal& n, Point& p) const
-{
-	float u1 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-	float u2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		
-	p = m_objectToWorld.TransformPoint(_UniformSampleHemisphere(u1, u2));
-	n = Normalize(m_objectToWorld.TransformNormal(Normal(p-m_objectToWorld.TransformPoint(Point(0.0f, 0.0f, 0.0f)))));
-}
-
-Point Sphere::_UniformSampleHemisphere(float u1, float u2) const
-{
-	float z = u1;
-	float r = sqrtf(std::max(0.f, 1.f - z*z));
-	float phi = 2 * M_PI * u2;
-	float x = r * cosf(phi);
-	float y = r * sinf(phi);
-	return Point(x, y, z);
-}
-*/
 bool Sphere::GetIntersection(const Ray &ray, float *tHit, DifferentialGeometry& dg) const
 {
     Point phit;
