@@ -130,33 +130,25 @@ inline float GetRandom()
 #include <core/transform.h>
 #include <core/bbox.h>
 #include <core/area_light.h>
-
 #include <core/aggregate.h>
-
 #include <core/scene.h>
-
 #include <core/bxdf.h>
 #include <core/bsdf.h>
-
 #include <core/differential_geometry.h>
-
 #include <core/lambertian_bxdf.h>
 #include <core/specular_reflection_bxdf.h>
 #include <core/glossy_reflection_bxdf.h>
-
 #include <core/integrator.h>
 #include <core/surface_integrator.h>
 #include <core/volume_integrator.h>
 #include <core/spectrum.h>
 #include <core/material.h>
 #include <core/light.h>
-
 #include <core/shape.h>
 #include <core/geometric_primitive.h>
 #include <core/transformed_primitive.h>
 #include <core/monte_carlo.h>
 #include <core/primitive.h>
-
 #include <core/renderer.h>
 #include <core/camera.h>
 #include <core/projective_camera.h>
@@ -167,34 +159,31 @@ inline float GetRandom()
 #include <core/intersection.h>
 #include <core/visibility_tester.h>
 #include <core/shape_set.h>
-
 #include <core/distribution1d.h>
 #include <core/distribution2d.h>
 #include <core/texture.h>
+#include <core/mip_map.h>
+
 
 #include <cameras/orthographic.h>
 #include <cameras/perspective.h>
-
 #include <lights/diffuse_area.h>
 #include <lights/point.h>
 #include <lights/directional.h>
 #include <lights/infinite_area.h>
-
 #include <shapes/sphere.h>
 #include <shapes/trianglemesh.h>
 #include <film/image.h>
 #include <accelerator/dummy_accelerator.h>
 #include <accelerator/bvh.h>
 #include <renderer/sampler.h>
-
 #include <integrators/direct_lighting.h>
 #include <integrators/ambient_occlusion.h>
 #include <integrators/pathtracing.h>
-
 #include <materials/diffuse.h>
 #include <materials/phong.h>
 #include <materials/mirror.h>
-
 #include <parser/obj_mesh.h>
+#include <textures/image_texture.h>
 
 #endif

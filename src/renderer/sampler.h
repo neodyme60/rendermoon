@@ -11,6 +11,15 @@ class Spectrum;
 class SurfaceIntegrator;
 class VolumeIntegrator;
 
+struct thread_data{
+	int  thread_id;
+	Scene* scene;
+	int width;
+	int ystart;
+	int yend;
+	char *message;
+};
+
 class Sampler : public Renderer
 {
 public:
@@ -21,7 +30,7 @@ public:
 
     Sampler(SurfaceIntegrator * surfaceIntegrator, VolumeIntegrator* volumeIntegrator, int samples);
     void Render(const Scene*);
-
+	void Task(void*);
 	Spectrum Li(const Scene *scene, const Ray&, Intersection &i);
 
 protected:

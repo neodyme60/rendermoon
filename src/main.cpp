@@ -1,5 +1,7 @@
 #include <iostream>
 #include <rendermoon.h>
+//#include <Eigen/Eigen>
+//#include <boost/shared_ptr.hpp>
 
 //#include <vld.h>
 /*
@@ -1092,9 +1094,11 @@ void monkey_mesh_light(int samples, std::string filename, int width, int height,
 	Reference<Shape> s9 = Reference<Shape>(new Sphere(&t9a, &t9b, false, 400.0f));
     */
 
-	Transform t9a = Transform::CreateTranslate(278.0, 400.0, 270.5);
+	
+	Transform t9a = Transform::CreateTranslate(278.0, 200.0, 270.5);
 	Transform t9b = t9a.GetInverse();
-	Reference<Shape> s9 = Reference<Shape>(new Sphere(&t9a, &t9b, false, 30.0f));
+	Reference<Shape> s9 = Reference<Shape>(new Sphere(&t9a, &t9b, false, 100.0f));
+	
 
 	/*
 	Transform t9a = Transform::CreateTranslate(278.0, 200.0, 270)*Transform::CreateScale(5.0f, 5.0f, 5.0f)*Transform::CreateRotate_y(180.0f);
@@ -1108,12 +1112,11 @@ void monkey_mesh_light(int samples, std::string filename, int width, int height,
     Transform t9b = t9a.GetInverse();
     obj_loader.Parse("scenes/obj/cube.obj");
 	*/
+	
 	/*
-    Transform t9a = Transform::CreateTranslate(278.0, 400.0, 270.5)*Transform::CreateScale(30.0f, 30.0f, 30.0f);
+    Transform t9a = Transform::CreateTranslate(278.0, 200.0, 270.5);
     Transform t9b = t9a.GetInverse();
-    obj_loader.Parse("scenes/obj/sphere.obj");
-	*/
-	/*
+	obj_loader.Parse("scenes/obj/sphere_low_100.obj");	
 	Reference<Shape> s9 = Reference<Shape>(new TriangleMesh(&t9a, &t9b, false, (int)obj_loader.m_VertexIndex.size() / 3, (int)obj_loader.m_Points.size(),
 		obj_loader.m_VertexIndex.size()>0 ? &obj_loader.m_VertexIndex[0] : 0,
 		obj_loader.m_Points.size()>0 ? &obj_loader.m_Points[0] : NULL,
@@ -1122,7 +1125,7 @@ void monkey_mesh_light(int samples, std::string filename, int width, int height,
 		obj_loader.m_uvs.size()>0 ? &obj_loader.m_uvs[0] : NULL));
 	*/
 	Material *m9 = new DiffuseMaterial(Spectrum(0.0));
-	Spectrum a1l = Spectrum(20.0);
+	Spectrum a1l = Spectrum(5.0);
 	DiffuseAreaLight * al = new DiffuseAreaLight(t9a, a1l, light_samples, s9);
 	Primitive* g9 = new GeometricPrimitive(s9, m9, al);
 	lights.push_back(al);
@@ -1373,7 +1376,7 @@ void jensen_cbox(int samples, std::string filename, int width, int height, Direc
 	VolumeIntegrator* volume_integrator = nullPtr;
 	//    SurfaceIntegrator* surface_integrator =  new AmbientOcclusion(10, 10.0f);
 //	SurfaceIntegrator* surface_integrator = new DirectLighting(dls);
-	SurfaceIntegrator* surface_integrator = new PathTracing(dls);
+	SurfaceIntegrator* surface_integrator = new PathTracing();
 
 	//renderer
 	Renderer * renderer = new Sampler(surface_integrator, volume_integrator, samples);
@@ -1596,7 +1599,7 @@ void mitsuba_cbox(int samples, std::string filename, int width, int height, Dire
     VolumeIntegrator* volume_integrator = nullPtr;
 //    SurfaceIntegrator* surface_integrator =  new AmbientOcclusion(10, 10.0f);
 //	SurfaceIntegrator* surface_integrator = new DirectLighting(dls);
-	SurfaceIntegrator* surface_integrator = new PathTracing(dls);
+	SurfaceIntegrator* surface_integrator = new PathTracing();
 
     //renderer
     Renderer * renderer = new Sampler(surface_integrator, volume_integrator, samples);
@@ -1999,7 +2002,7 @@ void javascript_cbox(int samples, std::string filename, int width, int height, D
 	VolumeIntegrator* volume_integrator = nullPtr;
 	//    SurfaceIntegrator* surface_integrator =  new AmbientOcclusion(10, 10.0f);
 	//SurfaceIntegrator* surface_integrator = new DirectLighting(dls);
-	SurfaceIntegrator* surface_integrator = new PathTracing(dls);
+	SurfaceIntegrator* surface_integrator = new PathTracing();
 
 	//renderer
 	Renderer * renderer = new Sampler(surface_integrator, volume_integrator, samples);
@@ -2012,10 +2015,9 @@ void javascript_cbox(int samples, std::string filename, int width, int height, D
 	film->WriteImage();
 }
 
-
-
 int main()
 {
+
 	/*
 #ifdef _DEBUG
 	int flag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
@@ -2034,9 +2036,9 @@ int main()
 
 
 
-//	javascript_cbox(50, "pathtracing.tga", 512, 384, DIRECT_LIGHTING_MIS);
+	javascript_cbox(20, "pathtracing.tga", 512/4, 384/4, DIRECT_LIGHTING_LIGHT_ONLY);
 
-//	monkey_mesh_light(2, "monkey.tga", 512 / 4, 512 / 4, DIRECT_LIGHTING_LIGHT_ONLY, 1);
+//	monkey_mesh_light(2, "monkey_sphere_light.tga", 512, 512, DIRECT_LIGHTING_LIGHT_ONLY, 1);
 
 
 //	jensen_cbox(250, "jensen_l.tga", 512, 384, DIRECT_LIGHTING_LIGHT_ONLY);
@@ -2049,6 +2051,6 @@ int main()
 	*/
 //	mitsuba_veach_mis(50, "veach_l.tga", 512, 384, DIRECT_LIGHTING_LIGHT_ONLY, 10);
 //	mitsuba_veach_mis(50, "veach_b.tga", 512, 384, DIRECT_LIGHTING_BRDF_ONLY, 10);
-	mitsuba_veach_mis(50, "veach_m.tga", 512, 384, DIRECT_LIGHTING_MIS, 10);
+//	mitsuba_veach_mis(50, "veach_mis_power.tga", 512, 384, DIRECT_LIGHTING_MIS, 10);
 	
 }

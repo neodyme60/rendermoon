@@ -141,7 +141,7 @@ private:
 };
 
 
-template <typename T, int logBlockSize> class BlockedArray 
+template <typename T, int logBlockSize=2> class BlockedArray
 {
 public:
     // BlockedArray Public Methods

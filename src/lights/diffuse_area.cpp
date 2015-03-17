@@ -34,8 +34,7 @@ Spectrum DiffuseAreaLight::Sample_L(const Point &p, float pEpsilon, float time, 
     *pdf = this->Pdf(p, *wi);
 
 	visibility.SetSegment(p, pEpsilon, ps, 1e-3f, time);
-    Spectrum Ls = L(ps, n, -*wi);
-    return Ls;
+	return 	L(ps, n, -*wi);
 }
 
 Spectrum DiffuseAreaLight::Sample_L(const Scene *scene, float u1, float u2, float time, Ray *ray, Normal *n, float *pdf) const

@@ -13,6 +13,13 @@
 #include "memory.h"
 */
 
+// MIPMap Declarations
+typedef enum {
+    TEXTURE_REPEAT,
+    TEXTURE_BLACK,
+    TEXTURE_CLAMP
+} ImageWrap;
+
 class TextureMapping2D
 {
 public:
@@ -21,17 +28,16 @@ public:
     virtual void Map(const DifferentialGeometry &dg, float *s, float *t, float *dsdx, float *dtdx, float *dsdy, float *dtdy) const = 0;
 };
 
-/*
 class SphericalMapping2D : public TextureMapping2D
 {
 public:
-    SphericalMapping2D(const Transform &toSph)// : m_WorldToTexture(toSph)
+    SphericalMapping2D(const Transform &toSph) : m_WorldToTexture(toSph)
     {
     }
     void Map(const DifferentialGeometry &dg, float *s, float *t, float *dsdx, float *dtdx, float *dsdy, float *dtdy) const;
 private:
     void sphere(const Point &P, float *s, float *t) const;
-    Transform WorldToTexture;
+    Transform m_WorldToTexture;
 };
 
 
@@ -63,6 +69,6 @@ class Texture : public ReferenceCounted
 public:
     virtual T Evaluate(const DifferentialGeometry &) const = 0;
     virtual ~Texture() { }
-};*/
+};
 
 #endif

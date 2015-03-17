@@ -4,7 +4,7 @@ class Ray;
 class Spectrum;
 struct Intersection;
 
-PathTracing::PathTracing(DirectLightingStrategy dls) : m_dls(dls)
+PathTracing::PathTracing() : m_dls(DIRECT_LIGHTING_LIGHT_ONLY)
 {
 
 }
@@ -49,10 +49,10 @@ Spectrum PathTracing::Li(const Scene& scene, const Renderer& renderer, const Ray
 		}
 
 		//direct lighting contribution
-		Spectrum Ld = DirectLightingEstimate(scene, renderer, p, n, wo, 0.0, bsdf, m_dls);
+		Spectrum Ld = DirectLightingEstimate(scene, renderer, p, n, wo, 0.0, bsdf, DIRECT_LIGHTING_LIGHT_ONLY);
 
 		//indirect
-		L = Ld;// +L * f  * AbsDot(n, wi) / brdf_sample_pdf;
+		L =  (Ld + L) * f  * AbsDot(n, wi) / brdf_sample_pdf;
 
         //!!!!
         delete bsdf;

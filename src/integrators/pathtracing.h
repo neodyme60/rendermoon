@@ -10,7 +10,7 @@
 class PathTracing : public SurfaceIntegrator
 {
 public:
-    PathTracing(DirectLightingStrategy dle = DIRECT_LIGHTING_MIS);
+    PathTracing();
     virtual ~PathTracing();
 
     Spectrum Li(const Scene&, const Renderer&, const Ray&, const Intersection &i);

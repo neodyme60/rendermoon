@@ -63,8 +63,8 @@ Spectrum DirectLightingEstimateLightSampling(const Scene &scene, const Renderer 
 
     //get light emit by sample direction on light, pdf
     Spectrum Li = light->Sample_L(p, 0.1f, 0.0, &wi, &light_sample_pdf, visibility);
-	const Ray r;
 
+	const Ray r;
 	if (light_sample_pdf > 0. && !Li.IsBlack())
 	{
 		//get brdf value
@@ -72,7 +72,6 @@ Spectrum DirectLightingEstimateLightSampling(const Scene &scene, const Renderer 
 		if (!f.IsBlack() && visibility.Unoccluded(scene))
 		{
 			L += f* Li * max(Dot(wi, n), 0.0f) / light_sample_pdf;
-
 		}
 	}
     return L;

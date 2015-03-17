@@ -1,6 +1,52 @@
 cmake_minimum_required (VERSION 2.6)
+
 project(procedural)
 
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
+
+#boost
+# Offer the user the choice of overriding the installation directories
+#set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
+#set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for executables")
+#set(INSTALL_INCLUDE_DIR include CACHE PATH "Installation directory for header files")
+set(ACTUAL_BOOST_ROOT "../external/boost_1_57_0/boost")
+message("Boost_DIR : " ${Boost_DIR})
+message("BOOST_ROOT: " $ENV{BOOST_ROOT})
+#if(MSVC)
+#    if(CMAKE_CL_64)
+#    else()
+#    endif()
+#endif()
+
+#SET(LibJpeg_INCLUDE_DIR "../external/libjpeg/" CACHE PATH "The Boost Directory Path")
+#SET(BOOST_ROOT "../external/boost_1_57_0/" CACHE PATH "The Boost Directory Path")
+#SET(EIGEN3_INCLUDE_DIR "../external/eigen/" CACHE PATH "Location of the Eigen include files")
+
+#libjpeg
+#find_package(LibJpeg REQUIRED)
+#IF(NOT LibJpeg_FOUND)
+#    message(FATAL_ERROR "LibJpeg not found")
+#ENDIF()
+#INCLUDE_DIRECTORIES(${LibJpeg_INCLUDE_DIR})
+
+#eigen
+#find_package(Eigen3 REQUIRED)
+#IF(NOT EIGEN3_FOUND)
+#    message(FATAL_ERROR "Eigen not found")
+#ENDIF()
+#INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR})
+
+#find_package(Boost REQUIRED)
+#IF(NOT Boost_FOUND)
+#    message(FATAL_ERROR "Boost not found")
+#ENDIF()
+#INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
+
+
+#get_cmake_property(_variableNames VARIABLES)
+#foreach (_variableName ${_variableNames})
+#    message(STATUS "${_variableName}=${${_variableName}}")
+#endforeach()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
 
@@ -14,7 +60,6 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2")
 
 include_directories("src")
-include_directories("external/eigen")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
@@ -62,28 +107,22 @@ set(SOURCE_FILES
                 src/materials/diffuse.cpp
                 src/materials/phong.cpp
                 src/materials/mirror.cpp
-
                 src/shapes/sphere.cpp
                 src/shapes/trianglemesh.cpp
-
                 src/lights/directional.cpp
                 src/lights/point.cpp
                 src/lights/infinite_area.cpp
-
                 src/cameras/perspective.cpp
                 src/cameras/orthographic.cpp
-
                 src/film/image.cpp
                 src/accelerator/dummy_accelerator.cpp
                 src/accelerator/bvh.cpp
                 src/renderer/sampler.cpp
-
                 src/integrators/direct_lighting.cpp
                 src/integrators/ambient_occlusion.cpp
                 src/integrators/pathtracing.cpp
-
                 src/lights/diffuse_area.cpp
-
+                src/textures/image_texture.cpp
                 src/parser/obj_mesh.cpp
 )
 
